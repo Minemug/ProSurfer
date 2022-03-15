@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
 	public CharacterController controller;
 	public Transform GroundCheck;
 	public LayerMask GroundMask;
+	public TextAsset speedui;
+
 
 	private float wishspeed2;
 	private float gravity = -20f;
@@ -42,7 +45,8 @@ public class PlayerController : MonoBehaviour
 
 	//UI
 	private Vector3 lastPos;
-	private Vector3 moved;
+    private Text TextLogAmount;
+    private Vector3 moved;
 	public Vector3 PlayerVel;
 	public float ModulasSpeed;
 	public float ZVelocity;
@@ -70,6 +74,8 @@ public class PlayerController : MonoBehaviour
 	{
 		//This is for UI, feel free to remove the Start() function.
 		lastPos = player.position;
+		TextLogAmount = GameObject.Find("Speed").GetComponent<UnityEngine.UI.Text>();
+		Debug.Log(TextLogAmount.text);
 	}
 
 	// Update is called once per frame
@@ -84,9 +90,9 @@ public class PlayerController : MonoBehaviour
 		ZVelocity = Mathf.Abs(PlayerVel.z);
 		XVelocity = Mathf.Abs(PlayerVel.x);
 
-
 		ModulasSpeed = Mathf.Sqrt(PlayerVel.z * PlayerVel.z + PlayerVel.x * PlayerVel.x);
-
+		TextLogAmount.text = ModulasSpeed.ToString();
+		
 		#endregion
 
 		IsGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
@@ -107,6 +113,7 @@ public class PlayerController : MonoBehaviour
 		udp.y = 0;
 		if (udp.magnitude > playerTopVelocity)
 			playerTopVelocity = udp.magnitude;
+		
 	}
 	public void SetMovementDir()
 	{
