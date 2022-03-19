@@ -30,7 +30,7 @@ public class MoveCamera : MonoBehaviour
         float h = HorizontalSens * Input.GetAxis("Mouse X");
         float v = -VerticalSens * Input.GetAxis("Mouse Y");
 
-        transform.Rotate(v, 0, 0);
+        player.transform.Rotate(v, 0, 0);
         player.transform.Rotate(0, h, 0);
     }
 }

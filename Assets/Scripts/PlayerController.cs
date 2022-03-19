@@ -65,7 +65,9 @@ public class PlayerController : MonoBehaviour
 	public float z;
 
 	public bool IsGrounded;
-
+	private Vector3 hitNormal; // for realtime ground normal calculation when ground touched
+	public float slopeAngle; // for realtime slope angle calculation when ground touched
+	public bool isGrounded; // alternative to _controller.isGrounded
 	public Transform player;
 	Vector3 udp;
 
@@ -75,9 +77,9 @@ public class PlayerController : MonoBehaviour
 		//This is for UI, feel free to remove the Start() function.
 		lastPos = player.position;
 		TextLogAmount = GameObject.Find("Speed").GetComponent<UnityEngine.UI.Text>();
-		Debug.Log(TextLogAmount.text);
+		//Debug.Log(TextLogAmount.text);
 	}
-
+	Vector3 respawnpoint = new Vector3 (-8, 5, 15);
 	// Update is called once per frame
 	void Update()
 	{
@@ -98,7 +100,12 @@ public class PlayerController : MonoBehaviour
 		IsGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
 
 		QueueJump();
-
+		
+		if (slopeAngle > controller.slopeLimit)
+		{
+			isGrounded = false; // no GroundMove function will be applied when sliding down the slope
+			playerVelocity = Vector3.ProjectOnPlane(playerVelocity, hitNormal);
+		}
 		/* Movement, here's the important part */
 		if (controller.isGrounded)
 			GroundMove();
@@ -113,14 +120,19 @@ public class PlayerController : MonoBehaviour
 		udp.y = 0;
 		if (udp.magnitude > playerTopVelocity)
 			playerTopVelocity = udp.magnitude;
-		
+
+		//if player falls down from the map respawn 
+		if (player.localPosition.y < -20)
+        {
+			player.transform.localPosition = respawnpoint;
+        }
 	}
 	public void SetMovementDir()
 	{
 		x = Input.GetAxis("Horizontal");
 		z = Input.GetAxis("Vertical");
 	}
-
+	
 	//Queues the next jump
 	void QueueJump()
 	{
@@ -292,6 +304,13 @@ public class PlayerController : MonoBehaviour
 			playerVelocity.x *= newspeed;
 			// playerVelocity.y *= newspeed;
 			playerVelocity.z *= newspeed;
+		}
+
+		void OnControllerColliderHit(ControllerColliderHit hit)
+		{
+			hitNormal = hit.normal; // normal refreshing
+			slopeAngle = Mathf.Round(Vector3.Angle(Vector3.up, hitNormal) * 100) / 100; // slope angle calculations
+
 		}
 	}
 }
