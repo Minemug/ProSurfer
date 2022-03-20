@@ -19,18 +19,29 @@ public class MoveCamera : MonoBehaviour
     //    player.transform.Rotate(-transform.right * rotateVertical * sensitivity * Time.deltaTime); //if you don't want the camera to rotate around the player
     //    //transform.
     //}
-    public float HorizontalSens;
-    public float VerticalSens;
-    //float horizontalSpeed = 2.0f;
-    //float verticalSpeed = 2.0f;
+    public float xRotation;
+    public float yRotation;
+    public float horizontalSpeed = 2.0f;
+    public float verticalSpeed = 2.0f;
 
     void Update()
     {
         // Get the mouse delta. This is not in the range -1...1
-        float h = HorizontalSens * Input.GetAxis("Mouse X");
-        float v = -VerticalSens * Input.GetAxis("Mouse Y");
+        //float h = HorizontalSens * Input.GetAxis("Mouse X");
+        //float v = -VerticalSens * Input.GetAxis("Mouse Y");
 
-        player.transform.Rotate(v, 0, 0);
-        player.transform.Rotate(0, h, 0);
+        //player.transform.Rotate(v, 0, 0);
+        //player.transform.Rotate(0, h, 0);
+        //player.transform.position.z = 0;
+
+        xRotation += verticalSpeed * Input.GetAxis("Mouse Y");
+        yRotation += horizontalSpeed * Input.GetAxis("Mouse X");
+        player.transform.eulerAngles = Move(xRotation,yRotation);
     }
+
+    
+        Vector3 Move(float x, float y) {
+            return new Vector3(-Mathf.Clamp(x, -30, 30), Mathf.Clamp(y, -360, 360), 0f);
+                }
+    
 }

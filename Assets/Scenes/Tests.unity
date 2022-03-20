@@ -923,23 +923,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.83
+      value: -6.73
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.78
+      value: -14.93
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 0.62232214
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: -0.7827612
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalRotation.z
@@ -947,7 +947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -103.028
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -967,7 +967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f202ed73ffdfbef4c81b00690a9bdd18, type: 3}
       propertyPath: m_TagString
@@ -1267,9 +1267,9 @@ MonoBehaviour:
   airDeacceleration: 2
   airControl: 0.3
   sideStrafeAcceleration: 50
-  sideStrafeSpeed: 1
+  sideStrafeSpeed: 3
   jumpSpeed: 8
-  friction: 6
+  friction: 2
   playerFriction: 0
   JumpQueue: 0
   wishJump: 0
@@ -1283,6 +1283,8 @@ MonoBehaviour:
   x: 0
   z: 0
   IsGrounded: 0
+  slopeAngle: 25
+  isGrounded: 0
   player: {fileID: 1445255198}
 --- !u!136 &1445255195
 CapsuleCollider:
@@ -1317,7 +1319,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 74117f645ca87544896e430b75e9a316, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1376,7 +1378,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.6
-  m_SlopeLimit: 45
+  m_SlopeLimit: 25
   m_StepOffset: 0.7
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
