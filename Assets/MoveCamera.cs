@@ -41,7 +41,7 @@ public class MoveCamera : MonoBehaviour
 
     
         Vector3 Move(float x, float y) {
-            return new Vector3(-Mathf.Clamp(x, -30, 30), Mathf.Clamp(y, -360, 360), 0f);
+            return new Vector3(-Mathf.Clamp(x, -90, 90), Mathf.Clamp(y, -float.MaxValue, float.MaxValue), 0f);;
                 }
     
 }
