@@ -38,7 +38,7 @@ namespace Fragsurf.Movement {
         /// 
         /// </summary>
         public void ProcessMovement (ISurfControllable surfer, MovementConfig config, float deltaTime) {
-            
+            Debug.Log("Procces movement");
             // cache instead of passing around parameters
             _surfer = surfer;
             _config = config;
@@ -151,7 +151,7 @@ namespace Fragsurf.Movement {
 
                         slideDirection = new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).normalized;
                         slideSpeedCurrent = Mathf.Max (_config.maximumSlideSpeed, new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude);
-
+                            
                     }
 
                     sliding = false;
@@ -163,6 +163,7 @@ namespace Fragsurf.Movement {
                         sliding = true;
                         wasSliding = true;
                         SlideMovement ();
+                            Debug.Log("sliding");
                         return;
 
                     } else {
@@ -737,7 +738,7 @@ namespace Fragsurf.Movement {
         }
 
         void SlideMovement () {
-            
+            Debug.Log("sliding");
             // Gradually change direction
             slideDirection += new Vector3 (groundNormal.x, 0f, groundNormal.z) * slideSpeedCurrent * _deltaTime;
             slideDirection = slideDirection.normalized;

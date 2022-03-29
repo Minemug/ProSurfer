@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
+using System;
 
 namespace Fragsurf.Movement {
 
@@ -88,6 +90,8 @@ namespace Fragsurf.Movement {
         public Vector3 right { get { return viewTransform.right; } }
         public Vector3 up { get { return viewTransform.up; } }
 
+        public Text TextSpeedAmount { get; private set; }
+
         Vector3 prevPosition;
 
         ///// Methods /////
@@ -123,6 +127,7 @@ namespace Fragsurf.Movement {
             // Water check
             _cameraWaterCheckObject = new GameObject ("Camera water check");
             _cameraWaterCheckObject.layer = gameObject.layer;
+            Debug.Log(_cameraWaterCheckObject.layer);
             _cameraWaterCheckObject.transform.position = viewTransform.position;
 
             SphereCollider _cameraWaterCheckSphere = _cameraWaterCheckObject.AddComponent<SphereCollider> ();
@@ -213,17 +218,21 @@ namespace Fragsurf.Movement {
 
             _moveData.useStepOffset = useStepOffset;
             _moveData.stepOffset = stepOffset;
-
+            //get the ui compoment
+            TextSpeedAmount = GameObject.Find("Speed").GetComponent<UnityEngine.UI.Text>();
         }
-
+        Vector3 PlayerRespawnPoint = new Vector3(0,6,12);
         private void Update () {
 
             _colliderObject.transform.rotation = Quaternion.identity;
-
+            //Respawn
+            if (playerRotationTransform.position.y < -20)
+                playerRotationTransform.position = PlayerRespawnPoint;
 
             //UpdateTestBinds ();
             UpdateMoveData ();
-            
+            //Speed Indicator
+            TextSpeedAmount.text = Math.Round(_moveData.velocity.magnitude, 1).ToString();
             // Previous movement code
             Vector3 positionalMovement = transform.position - prevPosition;
             transform.position = prevPosition;
