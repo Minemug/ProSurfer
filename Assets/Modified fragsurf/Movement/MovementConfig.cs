@@ -49,7 +49,9 @@ namespace Fragsurf.Movement {
         public float underwaterFriction = 2f;
         public float underwaterGravity = 6f;
         public float underwaterVelocityDampening = 2f;
-        
+        [Header("Surfing")]
+        public LayerMask layer;
+
     }
 
 }

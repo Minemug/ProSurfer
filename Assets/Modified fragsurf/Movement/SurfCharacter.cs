@@ -127,7 +127,6 @@ namespace Fragsurf.Movement {
             // Water check
             _cameraWaterCheckObject = new GameObject ("Camera water check");
             _cameraWaterCheckObject.layer = gameObject.layer;
-            Debug.Log(_cameraWaterCheckObject.layer);
             _cameraWaterCheckObject.transform.position = viewTransform.position;
 
             SphereCollider _cameraWaterCheckSphere = _cameraWaterCheckObject.AddComponent<SphereCollider> ();

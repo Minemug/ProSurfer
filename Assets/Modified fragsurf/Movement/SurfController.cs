@@ -13,6 +13,7 @@ namespace Fragsurf.Movement {
 
         public bool jumping = false;
         public bool crouching = false;
+        private bool surfing= false;
         public float speed = 0f;
         
         public Transform camera;
@@ -33,12 +34,14 @@ namespace Fragsurf.Movement {
         ///// Methods /////
 
         Vector3 groundNormal = Vector3.up;
+        
 
         /// <summary>
         /// 
         /// </summary>
         public void ProcessMovement (ISurfControllable surfer, MovementConfig config, float deltaTime) {
-            Debug.Log("Procces movement");
+            
+            
             // cache instead of passing around parameters
             _surfer = surfer;
             _config = config;
@@ -125,15 +128,17 @@ namespace Fragsurf.Movement {
             switch (_surfer.moveType) {
 
                 case MoveType.Walk:
+                    
+                    
+                    if (_surfer.groundObject == null) {
 
-                if (_surfer.groundObject == null) {
-
-                    /*
-                    // AIR MOVEMENT
-                    */
-
+                        
+                        /*
+                        // AIR MOVEMENT
+                        */
+                        
                     wasSliding = false;
-
+                        surfing = false;
                     // apply movement from input
                     _surfer.moveData.velocity += AirInputMovement ();
 
@@ -142,12 +147,40 @@ namespace Fragsurf.Movement {
 
                 } else {
 
-                    /*
-                    //  GROUND MOVEMENT
-                    */
+                        /*
+                        //  GROUND MOVEMENT
+                        */
+                        //Surfing
+                        if (_surfer.groundObject.layer == 6)
+                        {
+                            Debug.Log("IM SURFING HA!");
+                            Trace rampSurface =TraceToFloor();
+                            var tests = Vector3.Dot(_surfer.forward, rampSurface.planeNormal);
+                            //Debug.Log(tests);
+                            if(tests < 0)
+                            {
+                                if (_surfer.moveData.verticalAxis != 0)
+                                {
+                                    _surfer.moveData.velocity = new Vector3(0,0,0);
+                                }
+                                else
+                                {
+                                    if(_surfer.moveData.horizontalAxis == 0)
+                                    {
+                                        _surfer.moveData.velocity = new Vector3(0, 0, 0);
+                                    }
+                                    else
+                                    {
+                                        _surfer.moveData.verticalAxis = -_surfer.moveData.horizontalAxis;
+                                        Debug.Log("thats the surf");
+                                    }
+                                }
+                                
+                            }
+                        }
 
-                    // Sliding
-                    if (!wasSliding) {
+                        // Sliding
+                        if (!wasSliding) {
 
                         slideDirection = new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).normalized;
                         slideSpeedCurrent = Mathf.Max (_config.maximumSlideSpeed, new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude);
@@ -163,7 +196,7 @@ namespace Fragsurf.Movement {
                         sliding = true;
                         wasSliding = true;
                         SlideMovement ();
-                            Debug.Log("sliding");
+                            
                         return;
 
                     } else {
@@ -227,15 +260,16 @@ namespace Fragsurf.Movement {
                     _surfer.moveData.velocity.y = yVel;
 
                     // Calculate how much slopes should affect movement
-                    float yVelocityNew = forwardVelocity.normalized.y * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude;
+                    //float yVelocityNew = forwardVelocity.normalized.y * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude;
 
                     // Apply the Y-movement from slopes
-                    _surfer.moveData.velocity.y = yVelocityNew * (_wishDir.y < 0f ? 1.2f : 1.0f);
-                    float removableYVelocity = _surfer.moveData.velocity.y - yVelocityNew;
+                    //_surfer.moveData.velocity.y = yVelocityNew * (_wishDir.y < 0f ? 1.2f : 1.0f);
+                    //float removableYVelocity = _surfer.moveData.velocity.y - yVelocityNew;
+                        
+                    }
+                
 
-                }
-
-                break;
+                    break;
 
             } // END OF SWITCH STATEMENT
         }
@@ -503,8 +537,10 @@ namespace Fragsurf.Movement {
 
             forward [1] = 0;
             right [1] = 0;
+            //Debug.Log("1" +forward + right);
             forward.Normalize ();
             right.Normalize ();
+            //Debug.Log("2"+forward + right);
 
             for (int i = 0; i < 3; i++)
                 wishVel [i] = forward [i] * _surfer.moveData.forwardMove + right [i] * _surfer.moveData.sideMove;
@@ -738,7 +774,6 @@ namespace Fragsurf.Movement {
         }
 
         void SlideMovement () {
-            Debug.Log("sliding");
             // Gradually change direction
             slideDirection += new Vector3 (groundNormal.x, 0f, groundNormal.z) * slideSpeedCurrent * _deltaTime;
             slideDirection = slideDirection.normalized;
