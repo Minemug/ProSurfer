@@ -9,7 +9,7 @@ namespace Fragsurf.Movement {
         /// <summary>
         /// Change this if your ground is on a different layer
         /// </summary>
-        public static int groundLayerMask = LayerMask.GetMask (new string[] { "Default", "Ground", "Player clip","SurfRamp" }); //(1 << 0);
+        public static int groundLayerMask = LayerMask.GetMask (new string[] { "Default", "Ground", "Player clip" }); //(1 << 0);
 
         private static Collider[] _colliders = new Collider [maxCollisions];
         private static Vector3[] _planes = new Vector3 [maxClipPlanes];
@@ -158,10 +158,6 @@ namespace Fragsurf.Movement {
 
         }
 
-        
-
-        
-
         /// <summary>
         /// 
         /// </summary>
@@ -290,9 +286,9 @@ namespace Fragsurf.Movement {
 
             var allFraction = 0f;
             var timeLeft = deltaTime;   // Total time for this movement operation.
-            
+
             for (int bumpcount = 0; bumpcount < numBumps; bumpcount++) {
-                
+
                 if (velocity.magnitude == 0f)
                     break;
 
@@ -300,7 +296,7 @@ namespace Fragsurf.Movement {
                 //  end point.
                 var end = VectorExtensions.VectorMa (origin, timeLeft, velocity);
                 var trace = Tracer.TraceCollider (collider, origin, end, groundLayerMask);
-                //Debug.Log(numplanes + "m" +trace.hitPoint +"hit"+ "fraction"+ trace.fraction );
+
                 allFraction += trace.fraction;
 
                 if (trace.fraction > 0) {
@@ -385,7 +381,7 @@ namespace Fragsurf.Movement {
                                 // Are we now moving against this plane?
                                 if (Vector3.Dot (velocity, _planes [j]) < 0)
                                     break;
-                                Debug.Log("against a plane");
+
                             }
                         }
 

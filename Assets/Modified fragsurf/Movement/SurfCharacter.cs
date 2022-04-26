@@ -2,10 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
-using UnityEngine.UI;
-using System;
-using Mirror;
-using UnityEngine.SceneManagement;
 
 namespace Fragsurf.Movement {
 
@@ -13,7 +9,7 @@ namespace Fragsurf.Movement {
     /// Easily add a surfable character to the scene
     /// </summary>
     [AddComponentMenu ("Fragsurf/Surf Character")]
-    public class SurfCharacter : NetworkBehaviour, ISurfControllable {
+    public class SurfCharacter : MonoBehaviour, ISurfControllable {
 
         public enum ColliderType {
             Capsule,
@@ -91,8 +87,7 @@ namespace Fragsurf.Movement {
         public Vector3 forward { get { return viewTransform.forward; } }
         public Vector3 right { get { return viewTransform.right; } }
         public Vector3 up { get { return viewTransform.up; } }
-        public Text TextSpeedAmount { get; private set; }
-        Camera mainCam;
+
         Vector3 prevPosition;
 
         ///// Methods /////
@@ -104,273 +99,235 @@ namespace Fragsurf.Movement {
 		}
 		
         private void Awake () {
-                _controller.playerTransform = playerRotationTransform;
-                mainCam = Camera.main;
-
-            if (viewTransform != null)
-                {
-
-                    _controller.camera = viewTransform;
-                    _controller.cameraYPos = viewTransform.localPosition.y;
-
-                }
             
-        }
-        public override void OnStartLocalPlayer()
-        {
-            if (mainCam != null)
-            {
-                // configure and make camera a child of player with 3rd person offset
-                mainCam.orthographic = false;
-                mainCam.transform.SetParent(transform);
-                mainCam.transform.localPosition = new Vector3(1f, 0f, 0f);
-                mainCam.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
-            }
-        }
-
-        public override void OnStopClient()
-        {
-            if (isLocalPlayer && mainCam != null)
-            {
-                mainCam.transform.SetParent(null);
-                SceneManager.MoveGameObjectToScene(mainCam.gameObject, SceneManager.GetActiveScene());
-                mainCam.orthographic = true;
-                mainCam.transform.localPosition = new Vector3(0f, 70f, 0f);
-                mainCam.transform.localEulerAngles = new Vector3(90f, 0f, 0f);
-            }
-        }
-
-        private void Start()
-        {
+            _controller.playerTransform = playerRotationTransform;
             
-            _colliderObject = new GameObject("PlayerCollider");
-                _colliderObject.layer = gameObject.layer;
-                _colliderObject.transform.SetParent(transform);
-                _colliderObject.transform.rotation = Quaternion.identity;
-                _colliderObject.transform.localPosition = Vector3.zero;
-                _colliderObject.transform.SetSiblingIndex(0);
-                
-                // Water check
-                _cameraWaterCheckObject = new GameObject("Camera water check");
-                _cameraWaterCheckObject.layer = gameObject.layer;
-                Debug.Log(_cameraWaterCheckObject.layer);
-                _cameraWaterCheckObject.transform.position = viewTransform.position;
+            if (viewTransform != null) {
 
-                SphereCollider _cameraWaterCheckSphere = _cameraWaterCheckObject.AddComponent<SphereCollider>();
-                _cameraWaterCheckSphere.radius = 0.1f;
-                _cameraWaterCheckSphere.isTrigger = true;
+                _controller.camera = viewTransform;
+                _controller.cameraYPos = viewTransform.localPosition.y;
 
-                Rigidbody _cameraWaterCheckRb = _cameraWaterCheckObject.AddComponent<Rigidbody>();
-                _cameraWaterCheckRb.useGravity = false;
-                _cameraWaterCheckRb.isKinematic = true;
+            }
 
-                _cameraWaterCheck = _cameraWaterCheckObject.AddComponent<CameraWaterCheck>();
-
-                prevPosition = transform.position;
-
-                if (viewTransform == null)
-                    viewTransform = Camera.main.transform;
-
-                if (playerRotationTransform == null && transform.childCount > 0)
-                    playerRotationTransform = transform.GetChild(0);
-
-                _collider = gameObject.GetComponent<Collider>();
-
-                if (_collider != null)
-                    GameObject.Destroy(_collider);
-
-                // rigidbody is required to collide with triggers
-                rb = gameObject.GetComponent<Rigidbody>();
-                if (rb == null)
-                    rb = gameObject.AddComponent<Rigidbody>();
-
-                allowCrouch = crouchingEnabled;
-
-                rb.isKinematic = true;
-                rb.useGravity = false;
-                rb.angularDrag = 0f;
-                rb.drag = 0f;
-                rb.mass = weight;
-
-
-                switch (collisionType)
-                {
-
-                    // Box collider
-                    case ColliderType.Box:
-
-                        _collider = _colliderObject.AddComponent<BoxCollider>();
-
-                        var boxc = (BoxCollider)_collider;
-                        boxc.size = colliderSize;
-
-                        defaultHeight = boxc.size.y;
-
-                        break;
-
-                    // Capsule collider
-                    case ColliderType.Capsule:
-
-                        _collider = _colliderObject.AddComponent<CapsuleCollider>();
-
-                        var capc = (CapsuleCollider)_collider;
-                        capc.height = colliderSize.y;
-                        capc.radius = colliderSize.x / 2f;
-
-                        defaultHeight = capc.height;
-
-                        break;
-
-                }
-
-                _moveData.slopeLimit = movementConfig.slopeLimit;
-
-                _moveData.rigidbodyPushForce = rigidbodyPushForce;
-
-                _moveData.slidingEnabled = slidingEnabled;
-                _moveData.laddersEnabled = laddersEnabled;
-                _moveData.angledLaddersEnabled = supportAngledLadders;
-
-                _moveData.playerTransform = transform;
-                _moveData.viewTransform = viewTransform;
-                _moveData.viewTransformDefaultLocalPos = viewTransform.localPosition;
-
-                _moveData.defaultHeight = defaultHeight;
-                _moveData.crouchingHeight = crouchingHeightMultiplier;
-                _moveData.crouchingSpeed = crouchingSpeed;
-
-                _collider.isTrigger = !solidCollider;
-                _moveData.origin = transform.position;
-                _startPosition = transform.position;
-
-                _moveData.useStepOffset = useStepOffset;
-                _moveData.stepOffset = stepOffset;
-                //get the ui compoment
-                TextSpeedAmount = GameObject.Find("Speed").GetComponent<UnityEngine.UI.Text>();
-                
         }
-        Vector3 PlayerRespawnPoint = new Vector3(0,6,12);
+
+        private void Start () {
+            
+            _colliderObject = new GameObject ("PlayerCollider");
+            _colliderObject.layer = gameObject.layer;
+            _colliderObject.transform.SetParent (transform);
+            _colliderObject.transform.rotation = Quaternion.identity;
+            _colliderObject.transform.localPosition = Vector3.zero;
+            _colliderObject.transform.SetSiblingIndex (0);
+
+            // Water check
+            _cameraWaterCheckObject = new GameObject ("Camera water check");
+            _cameraWaterCheckObject.layer = gameObject.layer;
+            _cameraWaterCheckObject.transform.position = viewTransform.position;
+
+            SphereCollider _cameraWaterCheckSphere = _cameraWaterCheckObject.AddComponent<SphereCollider> ();
+            _cameraWaterCheckSphere.radius = 0.1f;
+            _cameraWaterCheckSphere.isTrigger = true;
+
+            Rigidbody _cameraWaterCheckRb = _cameraWaterCheckObject.AddComponent<Rigidbody> ();
+            _cameraWaterCheckRb.useGravity = false;
+            _cameraWaterCheckRb.isKinematic = true;
+
+            _cameraWaterCheck = _cameraWaterCheckObject.AddComponent<CameraWaterCheck> ();
+
+            prevPosition = transform.position;
+
+            if (viewTransform == null)
+                viewTransform = Camera.main.transform;
+
+            if (playerRotationTransform == null && transform.childCount > 0)
+                playerRotationTransform = transform.GetChild (0);
+
+            _collider = gameObject.GetComponent<Collider> ();
+
+            if (_collider != null)
+                GameObject.Destroy (_collider);
+
+            // rigidbody is required to collide with triggers
+            rb = gameObject.GetComponent<Rigidbody> ();
+            if (rb == null)
+                rb = gameObject.AddComponent<Rigidbody> ();
+
+            allowCrouch = crouchingEnabled;
+
+            rb.isKinematic = true;
+            rb.useGravity = false;
+            rb.angularDrag = 0f;
+            rb.drag = 0f;
+            rb.mass = weight;
+
+
+            switch (collisionType) {
+
+                // Box collider
+                case ColliderType.Box:
+
+                _collider = _colliderObject.AddComponent<BoxCollider> ();
+
+                var boxc = (BoxCollider)_collider;
+                boxc.size = colliderSize;
+
+                defaultHeight = boxc.size.y;
+
+                break;
+
+                // Capsule collider
+                case ColliderType.Capsule:
+
+                _collider = _colliderObject.AddComponent<CapsuleCollider> ();
+
+                var capc = (CapsuleCollider)_collider;
+                capc.height = colliderSize.y;
+                capc.radius = colliderSize.x / 2f;
+
+                defaultHeight = capc.height;
+
+                break;
+
+            }
+
+            _moveData.slopeLimit = movementConfig.slopeLimit;
+
+            _moveData.rigidbodyPushForce = rigidbodyPushForce;
+
+            _moveData.slidingEnabled = slidingEnabled;
+            _moveData.laddersEnabled = laddersEnabled;
+            _moveData.angledLaddersEnabled = supportAngledLadders;
+
+            _moveData.playerTransform = transform;
+            _moveData.viewTransform = viewTransform;
+            _moveData.viewTransformDefaultLocalPos = viewTransform.localPosition;
+
+            _moveData.defaultHeight = defaultHeight;
+            _moveData.crouchingHeight = crouchingHeightMultiplier;
+            _moveData.crouchingSpeed = crouchingSpeed;
+            
+            _collider.isTrigger = !solidCollider;
+            _moveData.origin = transform.position;
+            _startPosition = transform.position;
+
+            _moveData.useStepOffset = useStepOffset;
+            _moveData.stepOffset = stepOffset;
+
+        }
+
         private void Update () {
-                _colliderObject.transform.rotation = Quaternion.identity;
-                //Respawn
-                if (playerRotationTransform.position.y < -20)
-                    playerRotationTransform.position = PlayerRespawnPoint;
 
-                //UpdateTestBinds ();
-                UpdateMoveData();
-                //Speed Indicator
-                TextSpeedAmount.text = Math.Round(_moveData.velocity.magnitude, 1).ToString();
-                // Previous movement code
-                Vector3 positionalMovement = transform.position - prevPosition;
-                transform.position = prevPosition;
-                moveData.origin += positionalMovement;
+            _colliderObject.transform.rotation = Quaternion.identity;
 
-                // Triggers
-                if (numberOfTriggers != triggers.Count)
-                {
-                    numberOfTriggers = triggers.Count;
 
-                    underwater = false;
-                    triggers.RemoveAll(item => item == null);
-                    foreach (Collider trigger in triggers)
-                    {
+            //UpdateTestBinds ();
+            UpdateMoveData ();
+            
+            // Previous movement code
+            Vector3 positionalMovement = transform.position - prevPosition;
+            transform.position = prevPosition;
+            moveData.origin += positionalMovement;
 
-                        if (trigger == null)
-                            continue;
+            // Triggers
+            if (numberOfTriggers != triggers.Count) {
+                numberOfTriggers = triggers.Count;
 
-                        if (trigger.GetComponentInParent<Water>())
-                            underwater = true;
+                underwater = false;
+                triggers.RemoveAll (item => item == null);
+                foreach (Collider trigger in triggers) {
 
-                    }
+                    if (trigger == null)
+                        continue;
+
+                    if (trigger.GetComponentInParent<Water> ())
+                        underwater = true;
 
                 }
 
-                _moveData.cameraUnderwater = _cameraWaterCheck.IsUnderwater();
-                _cameraWaterCheckObject.transform.position = viewTransform.position;
-                moveData.underwater = underwater;
+            }
 
-                if (allowCrouch)
-                    _controller.Crouch(this, movementConfig, Time.deltaTime);
-
-                _controller.ProcessMovement(this, movementConfig, Time.deltaTime);
-
-                transform.position = moveData.origin;
-                prevPosition = transform.position;
-
-                _colliderObject.transform.rotation = Quaternion.identity;
+            _moveData.cameraUnderwater = _cameraWaterCheck.IsUnderwater ();
+            _cameraWaterCheckObject.transform.position = viewTransform.position;
+            moveData.underwater = underwater;
             
+            if (allowCrouch)
+                _controller.Crouch (this, movementConfig, Time.deltaTime);
+
+            _controller.ProcessMovement (this, movementConfig, Time.deltaTime);
+
+            transform.position = moveData.origin;
+            prevPosition = transform.position;
+
+            _colliderObject.transform.rotation = Quaternion.identity;
+
         }
         
         private void UpdateTestBinds () {
-            if (isLocalPlayer)
-            {
-                if (Input.GetKeyDown(KeyCode.Backspace))
-                    ResetPosition();
-            }
+
+            if (Input.GetKeyDown (KeyCode.Backspace))
+                ResetPosition ();
+
         }
 
         private void ResetPosition () {
-            if (isLocalPlayer)
-            {
-                moveData.velocity = Vector3.zero;
-                moveData.origin = _startPosition;
-            }
+            
+            moveData.velocity = Vector3.zero;
+            moveData.origin = _startPosition;
+
         }
 
         private void UpdateMoveData () {
-            if (isLocalPlayer)
-            {
-                _moveData.verticalAxis = Input.GetAxisRaw("Vertical");
-                _moveData.horizontalAxis = Input.GetAxisRaw("Horizontal");
+            
+            _moveData.verticalAxis = Input.GetAxisRaw ("Vertical");
+            _moveData.horizontalAxis = Input.GetAxisRaw ("Horizontal");
 
-                _moveData.sprinting = Input.GetButton("Sprint");
+            _moveData.sprinting = Input.GetButton ("Sprint");
+            
+            if (Input.GetButtonDown ("Crouch"))
+                _moveData.crouching = true;
 
-                if (Input.GetButtonDown("Crouch"))
-                    _moveData.crouching = true;
+            if (!Input.GetButton ("Crouch"))
+                _moveData.crouching = false;
+            
+            bool moveLeft = _moveData.horizontalAxis < 0f;
+            bool moveRight = _moveData.horizontalAxis > 0f;
+            bool moveFwd = _moveData.verticalAxis > 0f;
+            bool moveBack = _moveData.verticalAxis < 0f;
+            bool jump = Input.GetButton ("Jump");
 
-                if (!Input.GetButton("Crouch"))
-                    _moveData.crouching = false;
+            if (!moveLeft && !moveRight)
+                _moveData.sideMove = 0f;
+            else if (moveLeft)
+                _moveData.sideMove = -moveConfig.acceleration;
+            else if (moveRight)
+                _moveData.sideMove = moveConfig.acceleration;
 
-                bool moveLeft = _moveData.horizontalAxis < 0f;
-                bool moveRight = _moveData.horizontalAxis > 0f;
-                bool moveFwd = _moveData.verticalAxis > 0f;
-                bool moveBack = _moveData.verticalAxis < 0f;
-                bool jump = Input.GetButton("Jump");
+            if (!moveFwd && !moveBack)
+                _moveData.forwardMove = 0f;
+            else if (moveFwd)
+                _moveData.forwardMove = moveConfig.acceleration;
+            else if (moveBack)
+                _moveData.forwardMove = -moveConfig.acceleration;
+            
+            if (Input.GetButtonDown ("Jump"))
+                _moveData.wishJump = true;
 
-                if (!moveLeft && !moveRight)
-                    _moveData.sideMove = 0f;
-                else if (moveLeft)
-                    _moveData.sideMove = -moveConfig.acceleration;
-                else if (moveRight)
-                    _moveData.sideMove = moveConfig.acceleration;
+            if (!Input.GetButton ("Jump"))
+                _moveData.wishJump = false;
+            
+            _moveData.viewAngles = _angles;
 
-                if (!moveFwd && !moveBack)
-                    _moveData.forwardMove = 0f;
-                else if (moveFwd)
-                    _moveData.forwardMove = moveConfig.acceleration;
-                else if (moveBack)
-                    _moveData.forwardMove = -moveConfig.acceleration;
-
-                if (Input.GetButtonDown("Jump"))
-                    _moveData.wishJump = true;
-
-                if (!Input.GetButton("Jump"))
-                    _moveData.wishJump = false;
-
-                _moveData.viewAngles = _angles;
-            }
         }
 
         private void DisableInput () {
-            if (isLocalPlayer)
-            {
 
-                _moveData.verticalAxis = 0f;
-                _moveData.horizontalAxis = 0f;
-                _moveData.sideMove = 0f;
-                _moveData.forwardMove = 0f;
-                _moveData.wishJump = false;
-            }
+            _moveData.verticalAxis = 0f;
+            _moveData.horizontalAxis = 0f;
+            _moveData.sideMove = 0f;
+            _moveData.forwardMove = 0f;
+            _moveData.wishJump = false;
+
         }
 
         /// <summary>
@@ -381,48 +338,45 @@ namespace Fragsurf.Movement {
         /// <param name="to"></param>
         /// <returns></returns>
         public static float ClampAngle (float angle, float from, float to) {
-           
-                if (angle < 0f)
-                    angle = 360 + angle;
 
-                if (angle > 180f)
-                    return Mathf.Max(angle, 360 + from);
+            if (angle < 0f)
+                angle = 360 + angle;
 
-                return Mathf.Min(angle, to);
-            
+            if (angle > 180f)
+                return Mathf.Max (angle, 360 + from);
+
+            return Mathf.Min (angle, to);
+
         }
 
         private void OnTriggerEnter (Collider other) {
-            if (isLocalPlayer)
-            {
-                if (!triggers.Contains(other))
-                    triggers.Add(other);
-            }
+            
+            if (!triggers.Contains (other))
+                triggers.Add (other);
+
         }
 
         private void OnTriggerExit (Collider other) {
-            if (isLocalPlayer)
-            {
-                if (triggers.Contains(other))
-                    triggers.Remove(other);
-            }
+            
+            if (triggers.Contains (other))
+                triggers.Remove (other);
+
         }
 
         private void OnCollisionStay (Collision collision) {
-            if (isLocalPlayer)
-            {
-                if (collision.rigidbody == null)
-                    return;
 
-                Vector3 relativeVelocity = collision.relativeVelocity * collision.rigidbody.mass / 50f;
-                Vector3 impactVelocity = new Vector3(relativeVelocity.x * 0.0025f, relativeVelocity.y * 0.00025f, relativeVelocity.z * 0.0025f);
+            if (collision.rigidbody == null)
+                return;
 
-                float maxYVel = Mathf.Max(moveData.velocity.y, 10f);
-                Vector3 newVelocity = new Vector3(moveData.velocity.x + impactVelocity.x, Mathf.Clamp(moveData.velocity.y + Mathf.Clamp(impactVelocity.y, -0.5f, 0.5f), -maxYVel, maxYVel), moveData.velocity.z + impactVelocity.z);
+            Vector3 relativeVelocity = collision.relativeVelocity * collision.rigidbody.mass / 50f;
+            Vector3 impactVelocity = new Vector3 (relativeVelocity.x * 0.0025f, relativeVelocity.y * 0.00025f, relativeVelocity.z * 0.0025f);
 
-                newVelocity = Vector3.ClampMagnitude(newVelocity, Mathf.Max(moveData.velocity.magnitude, 30f));
-                moveData.velocity = newVelocity;
-            }
+            float maxYVel = Mathf.Max (moveData.velocity.y, 10f);
+            Vector3 newVelocity = new Vector3 (moveData.velocity.x + impactVelocity.x, Mathf.Clamp (moveData.velocity.y + Mathf.Clamp (impactVelocity.y, -0.5f, 0.5f), -maxYVel, maxYVel), moveData.velocity.z + impactVelocity.z);
+
+            newVelocity = Vector3.ClampMagnitude (newVelocity, Mathf.Max (moveData.velocity.magnitude, 30f));
+            moveData.velocity = newVelocity;
+
         }
 
     }
