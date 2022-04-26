@@ -149,8 +149,12 @@ namespace Fragsurf.Movement {
                 _colliderObject.transform.rotation = Quaternion.identity;
                 _colliderObject.transform.localPosition = Vector3.zero;
                 _colliderObject.transform.SetSiblingIndex(0);
-
-
+                
+                // Water check
+                _cameraWaterCheckObject = new GameObject("Camera water check");
+                _cameraWaterCheckObject.layer = gameObject.layer;
+                Debug.Log(_cameraWaterCheckObject.layer);
+                _cameraWaterCheckObject.transform.position = viewTransform.position;
 
                 SphereCollider _cameraWaterCheckSphere = _cameraWaterCheckObject.AddComponent<SphereCollider>();
                 _cameraWaterCheckSphere.radius = 0.1f;
