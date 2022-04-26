@@ -306,12 +306,7 @@ public class PlayerController : MonoBehaviour
 			playerVelocity.z *= newspeed;
 		}
 
-		void OnControllerColliderHit(ControllerColliderHit hit)
-		{
-			hitNormal = hit.normal; // normal refreshing
-			slopeAngle = Mathf.Round(Vector3.Angle(Vector3.up, hitNormal) * 100) / 100; // slope angle calculations
 
-		}
 	}
 }
 
