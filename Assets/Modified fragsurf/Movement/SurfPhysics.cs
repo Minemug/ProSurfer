@@ -9,7 +9,7 @@ namespace Fragsurf.Movement {
         /// <summary>
         /// Change this if your ground is on a different layer
         /// </summary>
-        public static int groundLayerMask = LayerMask.GetMask (new string[] { "Default", "Ground", "Player clip" }); //(1 << 0);
+        public static int groundLayerMask = LayerMask.GetMask (new string[] { "Default", "Ground", "Player clip","SurfRamp" }); //(1 << 0);
 
         private static Collider[] _colliders = new Collider [maxCollisions];
         private static Vector3[] _planes = new Vector3 [maxClipPlanes];

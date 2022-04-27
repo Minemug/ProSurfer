@@ -117,7 +117,7 @@ namespace Fragsurf.Movement {
             _surfer = null;
             
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -142,12 +142,47 @@ namespace Fragsurf.Movement {
 
                 } else {
 
-                    /*
-                    //  GROUND MOVEMENT
-                    */
+                        //Debug.Log("viewTransformposition"+ _surfer.moveData.viewTransform.eulerAngles); 
+                        /*
+                        //  GROUND MOVEMENT
+                        */
+                        Vector3 wishVel, wishDir;
+                        float wishSpeed;
 
-                    // Sliding
-                    if (!wasSliding) {
+                        GetWishValues(out wishVel, out wishDir, out wishSpeed);
+                                        //Debug.Log(wishVel +"vel >dir"+ wishDir +"forwa" + _surfer.forward);
+                                Debug.Log(_surfer.up);
+                        if (_surfer.groundObject.layer == 6)
+                        {
+                            Trace rampSurface = TraceToFloor();
+                            //Debug.Log(rampSurface.planeNormal +""+ rampSurface.distance);
+                            var tests = Vector3.Dot(_surfer.forward, rampSurface.planeNormal);
+                            if (tests < 0)
+                            {
+                                if (_surfer.moveData.verticalAxis != 0)
+                                {
+                                    _surfer.moveData.velocity = new Vector3(0, 0, 0);
+                                }
+                                else
+                                {
+                                    if (_surfer.moveData.horizontalAxis == 0)
+                                    {
+                                        _surfer.moveData.velocity = new Vector3(0, 0, 0);
+                                        
+                                    }
+                                    else
+                                    {
+                                        
+                                        //_surfer.moveData.verticalAxis = -_surfer.moveData.horizontalAxis;
+                                        _surfer.moveData.velocity += _surfer.forward * 0.2f;
+                                        break;
+                                    }
+                                }
+
+                            }
+                        }
+                        // Sliding
+                        if (!wasSliding) {
 
                         slideDirection = new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).normalized;
                         slideSpeedCurrent = Mathf.Max (_config.maximumSlideSpeed, new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude);
@@ -728,11 +763,11 @@ namespace Fragsurf.Movement {
 
             }
 
-            // Changing camera position
-            if (!crouching)
-                _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight + Vector3.down * heightDifference * 0.5f, crouchLerp);
-            else
-                _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos - Vector3.down * heightDifference * 0.5f, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight, crouchLerp);
+            //// Changing camera position
+            //if (!crouching)
+            //    _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight + Vector3.down * heightDifference * 0.5f, crouchLerp);
+            //else
+            //    _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos - Vector3.down * heightDifference * 0.5f, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight, crouchLerp);
 
         }
 
