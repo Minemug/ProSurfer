@@ -275,7 +275,8 @@ namespace Fragsurf.Movement {
         /// <param name="firstDestination"></param>
         /// <param name="firstTrace"></param>
         /// <returns></returns>
-        public static int Reflect (ref Vector3 velocity, Collider collider, Vector3 origin, float deltaTime) {
+        public static int Reflect
+            (ref Vector3 velocity, Collider collider, Vector3 origin, float deltaTime) {
 
             float d;
             var newVelocity = Vector3.zero;

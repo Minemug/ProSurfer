@@ -59,7 +59,9 @@ namespace Fragsurf.Movement {
         public float fallingVelocity = 0f;
 
         public bool useStepOffset = false;
-        public float stepOffset = 0f; 
+        public float stepOffset = 0f;
+        //surf
+        public float surfGravityFactor;
 
     }
 }
