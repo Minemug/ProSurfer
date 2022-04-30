@@ -53,30 +53,29 @@ namespace Fragsurf.Movement {
 
             Vector3 forwardVelocity = Vector3.Scale (velocity, new Vector3 (1f, 0f, 1f));
             for (int i = 0; i < numOverlaps; i++) {
-
                 Vector3 direction;
                 float distance;
 
                 if (Physics.ComputePenetration (collider, origin,
                     Quaternion.identity, _colliders [i], _colliders [i].transform.position,
                     _colliders [i].transform.rotation, out direction, out distance)) {
-                    
-                    // Step offset
-                    if (stepOffset > 0f && surfer != null && surfer.moveData.useStepOffset)
-                        if (StepOffset (collider, _colliders [i], ref origin, ref velocity, rigidbodyPushForce, velocityMultiplier, stepOffset, direction, distance, forwardVelocity, surfer))
-                            return;
+
+                    //// Step offset
+                    //if (stepOffset > 0f && surfer != null && surfer.moveData.useStepOffset)
+                    //    if (StepOffset (collider, _colliders [i], ref origin, ref velocity, rigidbodyPushForce, velocityMultiplier, stepOffset, direction, distance, forwardVelocity, surfer))
+                    //        return;
 
                     // Handle collision
-                    direction.Normalize ();
+                    direction.Normalize();
                     Vector3 penetrationVector = direction * distance;
-                    Vector3 velocityProjected = Vector3.Project (velocity, -direction);
+                    Vector3 velocityProjected = Vector3.Project(velocity, -direction);
                     velocityProjected.y = 0; // don't touch y velocity, we need it to calculate fall damage elsewhere
                     origin += penetrationVector;
                     velocity -= velocityProjected * velocityMultiplier;
 
-                    Rigidbody rb = _colliders [i].GetComponentInParent<Rigidbody> ();
-                    if (rb != null && !rb.isKinematic)
-                        rb.AddForceAtPosition (velocityProjected * velocityMultiplier * rigidbodyPushForce, origin, ForceMode.Impulse);
+                    //Rigidbody rb = _colliders [i].GetComponentInParent<Rigidbody> ();
+                    //if (rb != null && !rb.isKinematic)
+                    //    rb.AddForceAtPosition (velocityProjected * velocityMultiplier * rigidbodyPushForce, origin, ForceMode.Impulse);
 
                 }
 

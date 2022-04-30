@@ -62,11 +62,11 @@ namespace Fragsurf.Movement {
                 
    
 
-            float yVel = _surfer.moveData.velocity.y;
-            _surfer.moveData.velocity.y = 0f;
-            _surfer.moveData.velocity = Vector3.ClampMagnitude (_surfer.moveData.velocity, _config.maxVelocity);
-            speed =  _surfer.moveData.velocity.magnitude;
-            _surfer.moveData.velocity.y = yVel;
+            //float yVel = _surfer.moveData.velocity.y;
+            //_surfer.moveData.velocity.y = 0f;
+            //_surfer.moveData.velocity = Vector3.ClampMagnitude (_surfer.moveData.velocity, _config.maxVelocity);
+            //speed =  _surfer.moveData.velocity.magnitude;
+            //_surfer.moveData.velocity.y = yVel;
             
             if (_surfer.moveData.velocity.sqrMagnitude == 0f) {
 
@@ -128,24 +128,30 @@ namespace Fragsurf.Movement {
                         /*
                         //  GROUND MOVEMENT
                         */
+                            
                         Vector3 wishVel, wishDir;
                         float wishSpeed;
                         GetWishValues(out wishVel, out wishDir, out wishSpeed);
                         if (_surfer.groundObject.layer == 6)
                         {
+                            var AD = new Vector3(0,0,_surfer.moveData.horizontalAxis);
+                            var ADv2 = GetADKeys();
                             Trace rampSurface = TraceToFloor();
-                            
                             var test2 = Vector3.Angle( rampSurface.planeNormal, wishDir);
-                            Debug.Log(test2);
+                            var test3 = Vector3.Angle( rampSurface.planeNormal, AD);
+                            //Debug.Log(test3);
                             //if holding key against plane
-                            if (test2 > 90)
+                            if (test3 < 90 && test3 !=0)
                             {
+                                //Debug.Log(test2);
                                 //surf
                                 Surf();
                                 break;
                             }
                             else
                             {
+                                //Debug.Log("siema");
+                                SetGround(null);
                                 //slide down
                             }
                             
@@ -216,14 +222,22 @@ namespace Fragsurf.Movement {
             } // END OF SWITCH STATEMENT
         }
 
+        private Vector3 GetADKeys()
+        {
+            if (_surfer.moveData.horizontalAxis == 1)
+                return new Vector3(0, 0, 1);
+            else if (_surfer.moveData.horizontalAxis == -1)
+                return new Vector3(1, 0, 0);
+            else return Vector3.zero;
+        }
+
         private void Surf()
         {
-            Debug.Log("surf");
             _surfer.moveData.surfaceFriction = _config.surfFriction;
             _surfer.moveData.velocity += _surfer.forward * 0.08f;
             //Debug.Log(_surfer.forward);
             //apply gravity
-            ApplyFriction(1f,true,true);
+            //ApplyFriction(1f,true,true);
             _surfer.moveData.velocity.y -= (_surfer.moveData.gravityFactor * _config.surfGravity * _deltaTime);
             _surfer.moveData.velocity.y += _surfer.baseVelocity.y * _deltaTime;
         }
