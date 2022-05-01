@@ -55,7 +55,6 @@ namespace Fragsurf.Movement {
                     _surfer.moveData.velocity.y += _surfer.baseVelocity.y * _deltaTime;
 
                 }
-
                 // input velocity, check for ground
                 CheckGrounded ();
                 CalculateMovementVelocity ();
@@ -87,7 +86,7 @@ namespace Fragsurf.Movement {
                     // increment origin
                     Vector3 velThisLoop = velocityThisFrame * (amountThisLoop / initialVel);
                     _surfer.moveData.origin += velThisLoop;
-
+                    Debug.Log("jestem tu");
                     // don't penetrate walls
                     SurfPhysics.ResolveCollisions (_surfer.collider, ref _surfer.moveData.origin, ref _surfer.moveData.velocity, _surfer.moveData.rigidbodyPushForce, amountThisLoop / initialVel, _surfer.moveData.stepOffset, _surfer);
 
@@ -128,22 +127,15 @@ namespace Fragsurf.Movement {
                         /*
                         //  GROUND MOVEMENT
                         */
-                            
-                        Vector3 wishVel, wishDir;
-                        float wishSpeed;
-                        GetWishValues(out wishVel, out wishDir, out wishSpeed);
+                        
                         if (_surfer.groundObject.layer == 6)
                         {
-                            var AD = new Vector3(0,0,_surfer.moveData.horizontalAxis);
-                            var ADv2 = GetADKeys();
+                            var AD = _surfer.right * _surfer.moveData.horizontalAxis * -1;
                             Trace rampSurface = TraceToFloor();
-                            var test2 = Vector3.Angle( rampSurface.planeNormal, wishDir);
-                            var test3 = Vector3.Angle( rampSurface.planeNormal, AD);
-                            //Debug.Log(test3);
+                            var ADandRamp = Vector3.Angle( rampSurface.planeNormal, AD);
                             //if holding key against plane
-                            if (test3 < 90 && test3 !=0)
+                            if (ADandRamp < 90 && ADandRamp != 0)
                             {
-                                //Debug.Log(test2);
                                 //surf
                                 Surf();
                                 break;
@@ -151,8 +143,7 @@ namespace Fragsurf.Movement {
                             else
                             {
                                 //Debug.Log("siema");
-                                SetGround(null);
-                                //slide down
+                                break;
                             }
                             
                         }
@@ -211,7 +202,7 @@ namespace Fragsurf.Movement {
                     // Calculate how much slopes should affect movement
                     float yVelocityNew = forwardVelocity.normalized.y * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude;
 
-                    // Apply the Y-movement from slopesd
+                    // Apply the Y-movement from slopes
                     _surfer.moveData.velocity.y = yVelocityNew * (_wishDir.y < 0f ? 1.2f : 1.0f);
                     float removableYVelocity = _surfer.moveData.velocity.y - yVelocityNew;
 

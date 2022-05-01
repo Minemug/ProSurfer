@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Fragsurf.Movement {
 
@@ -213,14 +214,9 @@ namespace Fragsurf.Movement {
 
             _moveData.useStepOffset = useStepOffset;
             _moveData.stepOffset = stepOffset;
-
         }
-
         private void Update () {
-
             _colliderObject.transform.rotation = Quaternion.identity;
-
-
             //UpdateTestBinds ();
             UpdateMoveData ();
             
