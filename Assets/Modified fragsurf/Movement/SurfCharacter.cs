@@ -54,7 +54,7 @@ namespace Fragsurf.Movement {
         private Vector3 _baseVelocity;
         private Collider _collider;
         private Vector3 _angles;
-        private Vector3 _startPosition;
+        private Vector3 _startPosition= new Vector3(-43,-5,7);
         private GameObject _colliderObject;
         private GameObject _cameraWaterCheckObject;
         private CameraWaterCheck _cameraWaterCheck;
@@ -216,6 +216,9 @@ namespace Fragsurf.Movement {
             _moveData.stepOffset = stepOffset;
         }
         private void Update () {
+            //Respawn
+            if (transform.position.y < -30)
+                ResetPosition();
             _colliderObject.transform.rotation = Quaternion.identity;
             //UpdateTestBinds ();
             UpdateMoveData ();

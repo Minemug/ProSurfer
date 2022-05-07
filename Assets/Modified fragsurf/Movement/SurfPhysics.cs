@@ -18,7 +18,7 @@ namespace Fragsurf.Movement {
         private const int maxClipPlanes = 5;
         private const int numBumps = 1;
 
-        public const float SurfSlope = 0.7f;
+        public const float SurfSlope = 0.3f;
 
         ///// Methods /////
 
@@ -59,8 +59,7 @@ namespace Fragsurf.Movement {
                 if (Physics.ComputePenetration (collider, origin,
                     Quaternion.identity, _colliders [i], _colliders [i].transform.position,
                     _colliders [i].transform.rotation, out direction, out distance)) {
-                    Debug.Log("penetracja");
-                    //// Step offset
+                    //// Step offset 
                     //if (stepOffset > 0f && surfer != null && surfer.moveData.useStepOffset)
                     //    if (StepOffset (collider, _colliders [i], ref origin, ref velocity, rigidbodyPushForce, velocityMultiplier, stepOffset, direction, distance, forwardVelocity, surfer))
                     //        return;
