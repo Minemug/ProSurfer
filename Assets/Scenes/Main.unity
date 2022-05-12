@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -423,13 +423,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534556764}
-  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: -27.18, y: -4.97, z: -4.02}
+  m_LocalRotation: {x: 0.38727424, y: 0, z: 0, w: 0.92196465}
+  m_LocalPosition: {x: -27.18, y: -4.62, z: -4.37}
   m_LocalScale: {x: 40, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.57, y: 0, z: 0}
 --- !u!1 &558261642
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,8 +489,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
+    m_FontSize: 19
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -533,6 +533,10 @@ PrefabInstance:
       value: 7.24
       objectReference: {fileID: 0}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: Speed
+      value: 
+      objectReference: {fileID: 558261644}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: laddersEnabled
       value: 0
       objectReference: {fileID: 0}
@@ -547,6 +551,10 @@ PrefabInstance:
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: movementConfig.gravity
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: movementConfig.surfspeed
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: movementConfig.slopeLimit
@@ -567,6 +575,18 @@ PrefabInstance:
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: movementConfig.surfFriction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: movementConfig.RampAccelaration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: movementConfig.RampDeccelaration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: movementConfig.surfingMultiplayer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8710008205490035915, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: m_Name
@@ -1002,13 +1022,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601996689}
-  m_LocalRotation: {x: 0.27059805, y: -0.6532815, z: 0.27059805, w: 0.6532815}
-  m_LocalPosition: {x: -81.04, y: -15.11, z: 15.32}
-  m_LocalScale: {x: 40, y: 1, z: 23.8415}
+  m_LocalRotation: {x: 0.3937359, y: 0.08688056, z: 0.034543995, w: 0.9144564}
+  m_LocalPosition: {x: -105.96, y: -20.97, z: 13.45}
+  m_LocalScale: {x: 88.9, y: 1, z: 23.8415}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 45, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.57, y: 15.417, z: 10.835}
 --- !u!1 &1712953283
 GameObject:
   m_ObjectHideFlags: 0

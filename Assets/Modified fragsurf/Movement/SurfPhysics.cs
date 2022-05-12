@@ -63,7 +63,6 @@ namespace Fragsurf.Movement {
                     //if (stepOffset > 0f && surfer != null && surfer.moveData.useStepOffset)
                     //    if (StepOffset (collider, _colliders [i], ref origin, ref velocity, rigidbodyPushForce, velocityMultiplier, stepOffset, direction, distance, forwardVelocity, surfer))
                     //        return;
-
                     // Handle collision
                     direction.Normalize();
                     Vector3 penetrationVector = direction * distance;

@@ -64,7 +64,6 @@ namespace Fragsurf.Movement {
             //_surfer.moveData.velocity.y = yVel;
             
             if (_surfer.moveData.velocity.sqrMagnitude == 0f) {
-
                 // Do collisions while standing still
                 SurfPhysics.ResolveCollisions (_surfer.collider, ref _surfer.moveData.origin, ref _surfer.moveData.velocity, _surfer.moveData.rigidbodyPushForce, 1f, _surfer.moveData.stepOffset, _surfer);
 
@@ -115,16 +114,17 @@ namespace Fragsurf.Movement {
                     
                     // let the magic happen
                     SurfPhysics.Reflect (ref _surfer.moveData.velocity, _surfer.collider, _surfer.moveData.origin, _deltaTime);
-                        
+                        Debug.Log("air");
 
                 } else {
 
                         /*
                         //  GROUND MOVEMENT
                         */
-                        
+                        //Debug.Log(_surfer.right);
                         if (_surfer.groundObject.layer == 6)
                         {
+
                             var AD = _surfer.right * _surfer.moveData.horizontalAxis * -1;
                             Trace rampSurface = TraceToFloor();
                             var ADandRamp = Vector3.Angle( rampSurface.planeNormal, AD);
@@ -132,8 +132,24 @@ namespace Fragsurf.Movement {
                             if (ADandRamp < 90 && ADandRamp != 0)
                             {
                                 //surf
-                                _surfer.moveData.velocity += _surfer.forward * 0.08f;
-                                ApplyFriction(0.1f,true,true);
+                                var myVal = ADandRamp - 45;
+                                //_surfer.moveData.velocity += _surfer.forward *  _config.surfspeed/100;
+                                //ApplyFriction(0.4f,true,true);
+                                Debug.Log(myVal);
+                                _surfer.moveData.origin.y += myVal * _config.surfingMultiplayer/10;
+                                _surfer.moveData.velocity += _surfer.forward *0.01f;
+                                //if (_surfer.forward.y > 0)
+                                //{
+                                //    _surfer.moveData.origin.y += _surfer.forward.y * -1 * _config.surfingMultiplayer;
+                                //    _surfer.moveData.velocity -= _surfer.forward.y * -1 * _surfer.forward * _config.RampDeccelaration / 10;
+                                //}
+                                //else
+                                //{
+                                //    var val = _surfer.forward;
+                                //    _surfer.moveData.origin.y -= _surfer.forward.y * -1 * _config.surfingMultiplayer;
+                                //    _surfer.moveData.velocity += _surfer.forward.y * -1 * _surfer.forward * _config.RampAccelaration / 10;
+                                //}
+                                
                                 break;
                             }
                             else
