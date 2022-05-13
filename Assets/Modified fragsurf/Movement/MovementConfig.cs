@@ -51,12 +51,10 @@ namespace Fragsurf.Movement {
         //public float underwaterVelocityDampening = 2f;
 
         [Header("Surfing")]
-        public float surfFriction = 1f;
         public float fallingspeed = 1f;
-        public float surfspeed = 0.08f;
-        public float RampAccelaration = 0.5f;
+        public float yChangeFactor = 1f;
+        public float RampAccelaration = 1f;
         public float RampDeccelaration = 0.5f;
-        public float surfingMultiplayer = 0.5f;
     }
 
 }

@@ -114,49 +114,48 @@ namespace Fragsurf.Movement {
                     
                     // let the magic happen
                     SurfPhysics.Reflect (ref _surfer.moveData.velocity, _surfer.collider, _surfer.moveData.origin, _deltaTime);
-                        Debug.Log("air");
 
                 } else {
-
+                        var vel = _surfer.moveData.velocity;
+                        vel[1] = 0;
+                        var dir = _surfer.forward;
+                        dir[1] = 0;
+                        var math = Vector3.Dot(vel, dir);
                         /*
                         //  GROUND MOVEMENT
                         */
-                        //Debug.Log(_surfer.right);
                         if (_surfer.groundObject.layer == 6)
                         {
-
                             var AD = _surfer.right * _surfer.moveData.horizontalAxis * -1;
                             Trace rampSurface = TraceToFloor();
                             var ADandRamp = Vector3.Angle( rampSurface.planeNormal, AD);
+                            var v2 = Vector3.Angle( rampSurface.planeNormal, dir);
                             //if holding key against plane
                             if (ADandRamp < 90 && ADandRamp != 0)
                             {
                                 //surf
-                                var myVal = ADandRamp - 45;
-                                //_surfer.moveData.velocity += _surfer.forward *  _config.surfspeed/100;
-                                //ApplyFriction(0.4f,true,true);
-                                Debug.Log(myVal);
-                                _surfer.moveData.origin.y += myVal * _config.surfingMultiplayer/10;
-                                _surfer.moveData.velocity += _surfer.forward *0.01f;
-                                //if (_surfer.forward.y > 0)
-                                //{
-                                //    _surfer.moveData.origin.y += _surfer.forward.y * -1 * _config.surfingMultiplayer;
-                                //    _surfer.moveData.velocity -= _surfer.forward.y * -1 * _surfer.forward * _config.RampDeccelaration / 10;
-                                //}
-                                //else
-                                //{
-                                //    var val = _surfer.forward;
-                                //    _surfer.moveData.origin.y -= _surfer.forward.y * -1 * _config.surfingMultiplayer;
-                                //    _surfer.moveData.velocity += _surfer.forward.y * -1 * _surfer.forward * _config.RampAccelaration / 10;
-                                //}
-                                
+                                var dir_ = v2 - 90;
+                                var _speed = _surfer.moveData.velocity.magnitude;
+                                // move up and down
+                                _surfer.moveData.origin.y += dir_ * _speed * _config.yChangeFactor / 10000;
+
+                                //accelarate when sliding down or up the slope
+                               if(dir_ < 0)
+                                {
+                                    _surfer.moveData.velocity += _surfer.forward * dir_ * -1 * _config.RampAccelaration/1000;
+                                }
+                                else
+                                {
+                                    _surfer.moveData.velocity += _surfer.forward * dir_ * -1 * _config.RampDeccelaration/1000;
+                                }
                                 break;
                             }
                             else
                             {
-                                //falling down
-                                _surfer.moveData.velocity.y =- _config.fallingspeed;
-                                
+                                //check if speed isnt negative then slow down
+                                if(math > 0f)
+                                    _surfer.moveData.velocity -= _surfer.moveData.velocity * 0.05f;
+                                _surfer.moveData.velocity.y =-  _config.fallingspeed;
                                 break;
                             }
                             

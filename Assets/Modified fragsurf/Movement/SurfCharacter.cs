@@ -217,7 +217,7 @@ namespace Fragsurf.Movement {
         }
         private void Update () {
             //Respawn
-            if (transform.position.y < -30)
+            if (transform.position.y < -50)
                 ResetPosition();
             // Speed indicator
             Speed.text = _moveData.velocity.magnitude.ToString();
