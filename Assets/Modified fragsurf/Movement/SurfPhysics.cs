@@ -18,7 +18,7 @@ namespace Fragsurf.Movement {
         private const int maxClipPlanes = 5;
         private const int numBumps = 1;
 
-        public const float SurfSlope = 0.7f;
+        public const float SurfSlope = 0.3f;
 
         ///// Methods /////
 
@@ -53,30 +53,27 @@ namespace Fragsurf.Movement {
 
             Vector3 forwardVelocity = Vector3.Scale (velocity, new Vector3 (1f, 0f, 1f));
             for (int i = 0; i < numOverlaps; i++) {
-
                 Vector3 direction;
                 float distance;
 
                 if (Physics.ComputePenetration (collider, origin,
                     Quaternion.identity, _colliders [i], _colliders [i].transform.position,
                     _colliders [i].transform.rotation, out direction, out distance)) {
-                    
-                    // Step offset
-                    if (stepOffset > 0f && surfer != null && surfer.moveData.useStepOffset)
-                        if (StepOffset (collider, _colliders [i], ref origin, ref velocity, rigidbodyPushForce, velocityMultiplier, stepOffset, direction, distance, forwardVelocity, surfer))
-                            return;
-
+                    //// Step offset 
+                    //if (stepOffset > 0f && surfer != null && surfer.moveData.useStepOffset)
+                    //    if (StepOffset (collider, _colliders [i], ref origin, ref velocity, rigidbodyPushForce, velocityMultiplier, stepOffset, direction, distance, forwardVelocity, surfer))
+                    //        return;
                     // Handle collision
-                    direction.Normalize ();
+                    direction.Normalize();
                     Vector3 penetrationVector = direction * distance;
-                    Vector3 velocityProjected = Vector3.Project (velocity, -direction);
+                    Vector3 velocityProjected = Vector3.Project(velocity, -direction);
                     velocityProjected.y = 0; // don't touch y velocity, we need it to calculate fall damage elsewhere
                     origin += penetrationVector;
                     velocity -= velocityProjected * velocityMultiplier;
 
-                    Rigidbody rb = _colliders [i].GetComponentInParent<Rigidbody> ();
-                    if (rb != null && !rb.isKinematic)
-                        rb.AddForceAtPosition (velocityProjected * velocityMultiplier * rigidbodyPushForce, origin, ForceMode.Impulse);
+                    //Rigidbody rb = _colliders [i].GetComponentInParent<Rigidbody> ();
+                    //if (rb != null && !rb.isKinematic)
+                    //    rb.AddForceAtPosition (velocityProjected * velocityMultiplier * rigidbodyPushForce, origin, ForceMode.Impulse);
 
                 }
 
@@ -157,10 +154,6 @@ namespace Fragsurf.Movement {
                 return false;
 
         }
-
-        
-
-        
 
         /// <summary>
         /// 
@@ -279,7 +272,8 @@ namespace Fragsurf.Movement {
         /// <param name="firstDestination"></param>
         /// <param name="firstTrace"></param>
         /// <returns></returns>
-        public static int Reflect (ref Vector3 velocity, Collider collider, Vector3 origin, float deltaTime) {
+        public static int Reflect
+            (ref Vector3 velocity, Collider collider, Vector3 origin, float deltaTime) {
 
             float d;
             var newVelocity = Vector3.zero;
@@ -290,9 +284,9 @@ namespace Fragsurf.Movement {
 
             var allFraction = 0f;
             var timeLeft = deltaTime;   // Total time for this movement operation.
-            
+
             for (int bumpcount = 0; bumpcount < numBumps; bumpcount++) {
-                
+
                 if (velocity.magnitude == 0f)
                     break;
 
@@ -300,7 +294,7 @@ namespace Fragsurf.Movement {
                 //  end point.
                 var end = VectorExtensions.VectorMa (origin, timeLeft, velocity);
                 var trace = Tracer.TraceCollider (collider, origin, end, groundLayerMask);
-                //Debug.Log(numplanes + "m" +trace.hitPoint +"hit"+ "fraction"+ trace.fraction );
+
                 allFraction += trace.fraction;
 
                 if (trace.fraction > 0) {
@@ -385,7 +379,7 @@ namespace Fragsurf.Movement {
                                 // Are we now moving against this plane?
                                 if (Vector3.Dot (velocity, _planes [j]) < 0)
                                     break;
-                                Debug.Log("against a plane");
+
                             }
                         }
 

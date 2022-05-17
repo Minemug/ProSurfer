@@ -4,7 +4,7 @@ namespace Fragsurf.Movement {
 
     public enum MoveType {
         None,
-        Walk,       
+        Walk,
         Noclip, // not implemented
         Ladder, // not implemented
     }
@@ -31,7 +31,6 @@ namespace Fragsurf.Movement {
         public bool wishJump = false;
         public bool crouching = false;
         public bool sprinting = false;
-        public LayerMask layer;
 
         public float slopeLimit = 45f;
 
@@ -60,7 +59,7 @@ namespace Fragsurf.Movement {
         public float fallingVelocity = 0f;
 
         public bool useStepOffset = false;
-        public float stepOffset = 0f; 
+        public float stepOffset = 0f;
 
     }
 }

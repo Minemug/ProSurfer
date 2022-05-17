@@ -13,18 +13,11 @@ namespace Fragsurf.Movement {
 
         public bool jumping = false;
         public bool crouching = false;
-        private bool surfing= false;
         public float speed = 0f;
         
         public Transform camera;
         public float cameraYPos = 0f;
 
-        private float slideSpeedCurrent = 0f;
-        private Vector3 slideDirection = Vector3.forward;
-
-        private bool sliding = false;
-        private bool wasSliding = false;
-        private float slideDelay = 0f;
         
         private bool uncrouchDown = false;
         private float crouchLerp = 0f;
@@ -34,62 +27,43 @@ namespace Fragsurf.Movement {
         ///// Methods /////
 
         Vector3 groundNormal = Vector3.up;
-        
 
         /// <summary>
         /// 
         /// </summary>
         public void ProcessMovement (ISurfControllable surfer, MovementConfig config, float deltaTime) {
             
-            
             // cache instead of passing around parameters
             _surfer = surfer;
             _config = config;
             _deltaTime = deltaTime;
+                       
             
-            if (_surfer.moveData.laddersEnabled && !_surfer.moveData.climbingLadder) {
-
-                // Look for ladders
-                LadderCheck (new Vector3(1f, 0.95f, 1f), _surfer.moveData.velocity * Mathf.Clamp (Time.deltaTime * 2f, 0.025f, 0.25f));
-
-            }
-            
-            if (_surfer.moveData.laddersEnabled && _surfer.moveData.climbingLadder) {
-                
-                LadderPhysics ();
-                
-            } else if (!_surfer.moveData.underwater) {
 
                 if (_surfer.moveData.velocity.y <= 0f)
                     jumping = false;
 
                 // apply gravity
-                if (_surfer.groundObject == null) {
+                if (_surfer.groundObject == null)
+                {
 
                     _surfer.moveData.velocity.y -= (_surfer.moveData.gravityFactor * _config.gravity * _deltaTime);
                     _surfer.moveData.velocity.y += _surfer.baseVelocity.y * _deltaTime;
 
                 }
-                
                 // input velocity, check for ground
                 CheckGrounded ();
                 CalculateMovementVelocity ();
                 
-            } else {
+   
 
-                // Do underwater logic
-                UnderwaterPhysics ();
-
-            }
-
-            float yVel = _surfer.moveData.velocity.y;
-            _surfer.moveData.velocity.y = 0f;
-            _surfer.moveData.velocity = Vector3.ClampMagnitude (_surfer.moveData.velocity, _config.maxVelocity);
-            speed =  _surfer.moveData.velocity.magnitude;
-            _surfer.moveData.velocity.y = yVel;
+            //float yVel = _surfer.moveData.velocity.y;
+            //_surfer.moveData.velocity.y = 0f;
+            //_surfer.moveData.velocity = Vector3.ClampMagnitude (_surfer.moveData.velocity, _config.maxVelocity);
+            //speed =  _surfer.moveData.velocity.magnitude;
+            //_surfer.moveData.velocity.y = yVel;
             
             if (_surfer.moveData.velocity.sqrMagnitude == 0f) {
-
                 // Do collisions while standing still
                 SurfPhysics.ResolveCollisions (_surfer.collider, ref _surfer.moveData.origin, ref _surfer.moveData.velocity, _surfer.moveData.rigidbodyPushForce, 1f, _surfer.moveData.stepOffset, _surfer);
 
@@ -107,7 +81,6 @@ namespace Fragsurf.Movement {
                     // increment origin
                     Vector3 velThisLoop = velocityThisFrame * (amountThisLoop / initialVel);
                     _surfer.moveData.origin += velThisLoop;
-
                     // don't penetrate walls
                     SurfPhysics.ResolveCollisions (_surfer.collider, ref _surfer.moveData.origin, ref _surfer.moveData.velocity, _surfer.moveData.rigidbodyPushForce, amountThisLoop / initialVel, _surfer.moveData.stepOffset, _surfer);
 
@@ -120,7 +93,7 @@ namespace Fragsurf.Movement {
             _surfer = null;
             
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -128,88 +101,76 @@ namespace Fragsurf.Movement {
             switch (_surfer.moveType) {
 
                 case MoveType.Walk:
-                    
-                    
-                    if (_surfer.groundObject == null) {
 
-                        
-                        /*
-                        // AIR MOVEMENT
-                        */
-                        
-                    wasSliding = false;
-                        surfing = false;
+                if (_surfer.groundObject == null) {
+
+                    /*
+                    // AIR MOVEMENT
+                    */
+
+
                     // apply movement from input
                     _surfer.moveData.velocity += AirInputMovement ();
-
+                    
                     // let the magic happen
                     SurfPhysics.Reflect (ref _surfer.moveData.velocity, _surfer.collider, _surfer.moveData.origin, _deltaTime);
 
                 } else {
-
+                        var vel = _surfer.moveData.velocity;
+                        vel[1] = 0;
+                        var dir = _surfer.forward;
+                        dir[1] = 0;
+                        var math = Vector3.Dot(vel, dir);
                         /*
                         //  GROUND MOVEMENT
                         */
-                        //Surfing
                         if (_surfer.groundObject.layer == 6)
                         {
-                            Debug.Log("IM SURFING HA!");
-                            Trace rampSurface =TraceToFloor();
-                            var tests = Vector3.Dot(_surfer.forward, rampSurface.planeNormal);
-                            //Debug.Log(tests);
-                            if(tests < 0)
+                            var AD = _surfer.right * _surfer.moveData.horizontalAxis * -1;
+                            Trace rampSurface = TraceToFloor();
+                            var ADandRamp = Vector3.Angle( rampSurface.planeNormal, AD);
+                            var v2 = Vector3.Angle( rampSurface.planeNormal, dir);
+                            //if holding key against plane
+                            if (ADandRamp < 90 && ADandRamp != 0)
                             {
-                                if (_surfer.moveData.verticalAxis != 0)
+                                //surf
+                                var dir_ = v2 - 90;
+                                var _speed = _surfer.moveData.velocity.magnitude;
+                                // move up and down
+                                _surfer.moveData.origin.y += dir_ * _speed * _config.yChangeFactor / 10000;
+
+                                //accelarate when sliding down or up the slope
+                               if(dir_ < 0)
                                 {
-                                    _surfer.moveData.velocity = new Vector3(0,0,0);
+                                    _surfer.moveData.velocity += _surfer.forward * dir_ * -1 * _config.RampAccelaration/1000;
                                 }
                                 else
                                 {
-                                    if(_surfer.moveData.horizontalAxis == 0)
-                                    {
-                                        _surfer.moveData.velocity = new Vector3(0, 0, 0);
-                                    }
-                                    else
-                                    {
-                                        _surfer.moveData.verticalAxis = -_surfer.moveData.horizontalAxis;
-                                        Debug.Log("thats the surf");
-                                    }
+                                    _surfer.moveData.velocity += _surfer.forward * dir_ * -1 * _config.RampDeccelaration/1000;
                                 }
-                                
+                                break;
                             }
+                            else if(ADandRamp > 90)
+                            {
+                                _surfer.moveData.velocity += AirInputMovement();
+
+                                // let the magic happen
+                                SurfPhysics.Reflect(ref _surfer.moveData.velocity, _surfer.collider, _surfer.moveData.origin, _deltaTime);
+                                break;
+                            }
+                            else
+                            {
+                                //check if speed isnt negative then slow down
+                                if(math > 0f)
+                                    _surfer.moveData.velocity -= _surfer.moveData.velocity * 0.05f;
+                                _surfer.moveData.velocity.y =-  _config.fallingspeed;
+                                break;
+                            }
+                            
                         }
+                        
 
-                        // Sliding
-                        if (!wasSliding) {
-
-                        slideDirection = new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).normalized;
-                        slideSpeedCurrent = Mathf.Max (_config.maximumSlideSpeed, new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude);
-                            
-                    }
-
-                    sliding = false;
-                    if (_surfer.moveData.velocity.magnitude > _config.minimumSlideSpeed && _surfer.moveData.slidingEnabled && _surfer.moveData.crouching && slideDelay <= 0f) {
-
-                        if (!wasSliding)
-                            slideSpeedCurrent = Mathf.Clamp (slideSpeedCurrent * _config.slideSpeedMultiplier, _config.minimumSlideSpeed, _config.maximumSlideSpeed);
-
-                        sliding = true;
-                        wasSliding = true;
-                        SlideMovement ();
-                            
-                        return;
-
-                    } else {
-
-                        if (slideDelay > 0f)
-                            slideDelay -= _deltaTime;
-
-                        if (wasSliding)
-                            slideDelay = _config.slideDelay;
-
-                        wasSliding = false;
-
-                    }
+                    
                     
                     float fric = crouching ? _config.crouchFriction : _config.friction;
                     float accel = crouching ? _config.crouchAcceleration : _config.acceleration;
@@ -260,83 +221,85 @@ namespace Fragsurf.Movement {
                     _surfer.moveData.velocity.y = yVel;
 
                     // Calculate how much slopes should affect movement
-                    //float yVelocityNew = forwardVelocity.normalized.y * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude;
+                    float yVelocityNew = forwardVelocity.normalized.y * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude;
 
                     // Apply the Y-movement from slopes
-                    //_surfer.moveData.velocity.y = yVelocityNew * (_wishDir.y < 0f ? 1.2f : 1.0f);
-                    //float removableYVelocity = _surfer.moveData.velocity.y - yVelocityNew;
-                        
-                    }
-                
+                    _surfer.moveData.velocity.y = yVelocityNew * (_wishDir.y < 0f ? 1.2f : 1.0f);
+                    float removableYVelocity = _surfer.moveData.velocity.y - yVelocityNew;
 
-                    break;
+                }
+
+                break;
 
             } // END OF SWITCH STATEMENT
         }
 
-        private void UnderwaterPhysics () {
 
-            _surfer.moveData.velocity = Vector3.Lerp (_surfer.moveData.velocity, Vector3.zero, _config.underwaterVelocityDampening * _deltaTime);
+        
 
-            // Gravity
-            if (!CheckGrounded ())
-                _surfer.moveData.velocity.y -= _config.underwaterGravity * _deltaTime;
+        //private void UnderwaterPhysics () {
 
-            // Swimming upwards
-            if (Input.GetButton ("Jump"))
-                _surfer.moveData.velocity.y += _config.swimUpSpeed * _deltaTime;
+        //    _surfer.moveData.velocity = Vector3.Lerp (_surfer.moveData.velocity, Vector3.zero, _config.underwaterVelocityDampening * _deltaTime);
 
-            float fric = _config.underwaterFriction;
-            float accel = _config.underwaterAcceleration;
-            float decel = _config.underwaterDeceleration;
+        //    // Gravity
+        //    if (!CheckGrounded ())
+        //        _surfer.moveData.velocity.y -= _config.underwaterGravity * _deltaTime;
 
-            ApplyFriction (1f, true, false);
+        //    // Swimming upwards
+        //    if (Input.GetButton ("Jump"))
+        //        _surfer.moveData.velocity.y += _config.swimUpSpeed * _deltaTime;
 
-            // Get movement directions
-            Vector3 forward = Vector3.Cross (groundNormal, -playerTransform.right);
-            Vector3 right = Vector3.Cross (groundNormal, forward);
+        //    float fric = _config.underwaterFriction;
+        //    float accel = _config.underwaterAcceleration;
+        //    float decel = _config.underwaterDeceleration;
 
-            float speed = _config.underwaterSwimSpeed;
+        //    ApplyFriction (1f, true, false);
 
-            Vector3 _wishDir;
+        //    // Get movement directions
+        //    Vector3 forward = Vector3.Cross (groundNormal, -playerTransform.right);
+        //    Vector3 right = Vector3.Cross (groundNormal, forward);
 
-            float forwardMove = _surfer.moveData.verticalAxis;
-            float rightMove = _surfer.moveData.horizontalAxis;
+        //    float speed = _config.underwaterSwimSpeed;
 
-            _wishDir = forwardMove * forward + rightMove * right;
-            _wishDir.Normalize ();
-            Vector3 moveDirNorm = _wishDir;
+        //    Vector3 _wishDir;
 
-            Vector3 forwardVelocity = Vector3.Cross (groundNormal, Quaternion.AngleAxis (-90, Vector3.up) * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z));
+        //    float forwardMove = _surfer.moveData.verticalAxis;
+        //    float rightMove = _surfer.moveData.horizontalAxis;
 
-            // Set the target speed of the player
-            float _wishSpeed = _wishDir.magnitude;
-            _wishSpeed *= speed;
+        //    _wishDir = forwardMove * forward + rightMove * right;
+        //    _wishDir.Normalize ();
+        //    Vector3 moveDirNorm = _wishDir;
 
-            // Accelerate
-            float yVel = _surfer.moveData.velocity.y;
-            Accelerate (_wishDir, _wishSpeed, accel, false);
+        //    Vector3 forwardVelocity = Vector3.Cross (groundNormal, Quaternion.AngleAxis (-90, Vector3.up) * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z));
 
-            float maxVelocityMagnitude = _config.maxVelocity;
-            _surfer.moveData.velocity = Vector3.ClampMagnitude (new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z), maxVelocityMagnitude);
-            _surfer.moveData.velocity.y = yVel;
+        //    // Set the target speed of the player
+        //    float _wishSpeed = _wishDir.magnitude;
+        //    _wishSpeed *= speed;
 
-            float yVelStored = _surfer.moveData.velocity.y;
-            _surfer.moveData.velocity.y = 0f;
+        //    // Accelerate
+        //    float yVel = _surfer.moveData.velocity.y;
+        //    Accelerate (_wishDir, _wishSpeed, accel, false);
 
-            // Calculate how much slopes should affect movement
-            float yVelocityNew = forwardVelocity.normalized.y * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude;
+        //    float maxVelocityMagnitude = _config.maxVelocity;
+        //    _surfer.moveData.velocity = Vector3.ClampMagnitude (new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z), maxVelocityMagnitude);
+        //    _surfer.moveData.velocity.y = yVel;
 
-            // Apply the Y-movement from slopes
-            _surfer.moveData.velocity.y = Mathf.Min (Mathf.Max (0f, yVelocityNew) + yVelStored, speed);
+        //    float yVelStored = _surfer.moveData.velocity.y;
+        //    _surfer.moveData.velocity.y = 0f;
 
-            // Jumping out of water
-            bool movingForwards = playerTransform.InverseTransformVector (_surfer.moveData.velocity).z > 0f;
-            Trace waterJumpTrace = TraceBounds (playerTransform.position, playerTransform.position + playerTransform.forward * 0.1f, SurfPhysics.groundLayerMask);
-            if (waterJumpTrace.hitCollider != null && Vector3.Angle (Vector3.up, waterJumpTrace.planeNormal) >= _config.slopeLimit && Input.GetButton ("Jump") && !_surfer.moveData.cameraUnderwater && movingForwards)
-                _surfer.moveData.velocity.y = Mathf.Max (_surfer.moveData.velocity.y, _config.jumpForce);
+        //    // Calculate how much slopes should affect movement
+        //    float yVelocityNew = forwardVelocity.normalized.y * new Vector3 (_surfer.moveData.velocity.x, 0f, _surfer.moveData.velocity.z).magnitude;
 
-        }
+        //    // Apply the Y-movement from slopes
+        //    _surfer.moveData.velocity.y = Mathf.Min (Mathf.Max (0f, yVelocityNew) + yVelStored, speed);
+
+        //    // Jumping out of water
+        //    bool movingForwards = playerTransform.InverseTransformVector (_surfer.moveData.velocity).z > 0f;
+        //    Trace waterJumpTrace = TraceBounds (playerTransform.position, playerTransform.position + playerTransform.forward * 0.1f, SurfPhysics.groundLayerMask);
+        //    if (waterJumpTrace.hitCollider != null && Vector3.Angle (Vector3.up, waterJumpTrace.planeNormal) >= _config.slopeLimit && Input.GetButton ("Jump") && !_surfer.moveData.cameraUnderwater && movingForwards)
+        //        _surfer.moveData.velocity.y = Mathf.Max (_surfer.moveData.velocity.y, _config.jumpForce);
+
+        //}
         
         private void LadderCheck (Vector3 colliderScale, Vector3 direction) {
 
@@ -503,7 +466,6 @@ namespace Fragsurf.Movement {
         /// </summary>
         /// <returns></returns>
         private Vector3 AirInputMovement () {
-
             Vector3 wishVel, wishDir;
             float wishSpeed;
 
@@ -537,10 +499,8 @@ namespace Fragsurf.Movement {
 
             forward [1] = 0;
             right [1] = 0;
-            //Debug.Log("1" +forward + right);
             forward.Normalize ();
             right.Normalize ();
-            //Debug.Log("2"+forward + right);
 
             for (int i = 0; i < 3; i++)
                 wishVel [i] = forward [i] * _surfer.moveData.forwardMove + right [i] * _surfer.moveData.sideMove;
@@ -580,7 +540,6 @@ namespace Fragsurf.Movement {
             if (trace.hitCollider == null || groundSteepness > _config.slopeLimit || (jumping && _surfer.moveData.velocity.y > 0f)) {
 
                 SetGround (null);
-
                 if (movingUp && _surfer.moveType != MoveType.Noclip)
                     _surfer.moveData.surfaceFriction = _config.airFriction;
                 
@@ -765,38 +724,40 @@ namespace Fragsurf.Movement {
 
             }
 
-            // Changing camera position
-            if (!crouching)
-                _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight + Vector3.down * heightDifference * 0.5f, crouchLerp);
-            else
-                _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos - Vector3.down * heightDifference * 0.5f, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight, crouchLerp);
+            //// Changing camera position
+            //if (!crouching)
+            //    _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight + Vector3.down * heightDifference * 0.5f, crouchLerp);
+            //else
+            //    _surfer.moveData.viewTransform.localPosition = Vector3.Lerp (_surfer.moveData.viewTransformDefaultLocalPos - Vector3.down * heightDifference * 0.5f, _surfer.moveData.viewTransformDefaultLocalPos * crouchingHeight, crouchLerp);
 
         }
 
-        void SlideMovement () {
-            // Gradually change direction
-            slideDirection += new Vector3 (groundNormal.x, 0f, groundNormal.z) * slideSpeedCurrent * _deltaTime;
-            slideDirection = slideDirection.normalized;
-
-            // Set direction
-            Vector3 slideForward = Vector3.Cross (groundNormal, Quaternion.AngleAxis (-90, Vector3.up) * slideDirection);
+        //void SlideMovement () {
             
-            // Set the velocity
-            slideSpeedCurrent -= _config.slideFriction * _deltaTime;
-            slideSpeedCurrent = Mathf.Clamp (slideSpeedCurrent, 0f, _config.maximumSlideSpeed);
-            slideSpeedCurrent -= (slideForward * slideSpeedCurrent).y * _deltaTime * _config.downhillSlideSpeedMultiplier; // Accelerate downhill (-y = downward, - * - = +)
-
-            _surfer.moveData.velocity = slideForward * slideSpeedCurrent;
             
-            // Jump
-            if (_surfer.moveData.wishJump && slideSpeedCurrent < _config.minimumSlideSpeed * _config.slideSpeedMultiplier) {
+        //    // Gradually change direction
+        //    slideDirection += new Vector3 (groundNormal.x, 0f, groundNormal.z) * slideSpeedCurrent * _deltaTime;
+        //    slideDirection = slideDirection.normalized;
 
-                Jump ();
-                return;
+        //    // Set direction
+        //    Vector3 slideForward = Vector3.Cross (groundNormal, Quaternion.AngleAxis (-90, Vector3.up) * slideDirection);
+            
+        //    // Set the velocity
+        //    slideSpeedCurrent -= _config.slideFriction * _deltaTime;
+        //    slideSpeedCurrent = Mathf.Clamp (slideSpeedCurrent, 0f, _config.maximumSlideSpeed);
+        //    slideSpeedCurrent -= (slideForward * slideSpeedCurrent).y * _deltaTime * _config.downhillSlideSpeedMultiplier; // Accelerate downhill (-y = downward, - * - = +)
 
-            }
+        //    _surfer.moveData.velocity = slideForward * slideSpeedCurrent;
+            
+        //    // Jump
+        //    if (_surfer.moveData.wishJump && slideSpeedCurrent < _config.minimumSlideSpeed * _config.slideSpeedMultiplier) {
 
-        }
+        //        Jump ();
+        //        return;
+
+        //    }
+
+        //}
 
     }
 }

@@ -4,6 +4,12 @@ namespace Fragsurf.Movement {
     [System.Serializable]
     public class MovementConfig {
 
+        [Header("Surfing")]
+        public float fallingspeed = 1f;
+        public float yChangeFactor = 1f;
+        public float RampAccelaration = 1f;
+        public float RampDeccelaration = 0.5f;
+
         [Header ("Jumping and gravity")]
         public bool autoBhop = true;
         public float gravity = 20f;
@@ -33,24 +39,22 @@ namespace Fragsurf.Movement {
         public float crouchDeceleration = 4f;
         public float crouchFriction = 3f;
 
-        [Header ("Sliding")]
-        public float minimumSlideSpeed = 9f;
-        public float maximumSlideSpeed = 18f;
-        public float slideSpeedMultiplier = 1.75f;
-        public float slideFriction = 14f;
-        public float downhillSlideSpeedMultiplier = 2.5f;
-        public float slideDelay = 0.5f;
+        //[Header ("Sliding")]
+        //public float minimumSlideSpeed = 9f;
+        //public float maximumSlideSpeed = 18f;
+        //public float slideSpeedMultiplier = 1.75f;
+        //public float slideFriction = 14f;
+        //public float downhillSlideSpeedMultiplier = 2.5f;
+        //public float slideDelay = 0.5f;
 
-        [Header ("Underwater")]
-        public float swimUpSpeed = 12f;
-        public float underwaterSwimSpeed = 3f;
-        public float underwaterAcceleration = 6f;
-        public float underwaterDeceleration = 3f;
-        public float underwaterFriction = 2f;
-        public float underwaterGravity = 6f;
-        public float underwaterVelocityDampening = 2f;
-        [Header("Surfing")]
-        public LayerMask layer;
+        //[Header ("Underwater")]
+        //public float swimUpSpeed = 12f;
+        //public float underwaterSwimSpeed = 3f;
+        //public float underwaterAcceleration = 6f;
+        //public float underwaterDeceleration = 3f;
+        //public float underwaterFriction = 2f;
+        //public float underwaterGravity = 6f;
+        //public float underwaterVelocityDampening = 2f;
 
     }
 
