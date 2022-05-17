@@ -4,6 +4,12 @@ namespace Fragsurf.Movement {
     [System.Serializable]
     public class MovementConfig {
 
+        [Header("Surfing")]
+        public float fallingspeed = 1f;
+        public float yChangeFactor = 1f;
+        public float RampAccelaration = 1f;
+        public float RampDeccelaration = 0.5f;
+
         [Header ("Jumping and gravity")]
         public bool autoBhop = true;
         public float gravity = 20f;
@@ -50,11 +56,6 @@ namespace Fragsurf.Movement {
         //public float underwaterGravity = 6f;
         //public float underwaterVelocityDampening = 2f;
 
-        [Header("Surfing")]
-        public float fallingspeed = 1f;
-        public float yChangeFactor = 1f;
-        public float RampAccelaration = 1f;
-        public float RampDeccelaration = 0.5f;
     }
 
 }

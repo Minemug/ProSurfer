@@ -19,6 +19,7 @@ namespace Fragsurf.Movement {
 
         ///// Fields /////
         public Text Speed;
+        public Text Keys;
         [Header("Physics Settings")]
         public Vector3 colliderSize = new Vector3 (1f, 2f, 1f);
         [HideInInspector] public ColliderType collisionType { get { return ColliderType.Box; } } // Capsule doesn't work anymore; I'll have to figure out why some other time, sorry.
@@ -217,11 +218,26 @@ namespace Fragsurf.Movement {
         }
         private void Update () {
             //Respawn
-            if (transform.position.y < -50)
+            if (transform.position.y < -100)
                 ResetPosition();
             // Speed indicator
             Speed.text = _moveData.velocity.magnitude.ToString();
+            // Keyboard indicator
+            switch (_moveData.horizontalAxis)
+            {
+                case -1:
+                    Keys.text = "A";
+                    break;
+                case 1:
+                    Keys.text = "D";
+                    break;
+                default :
+                    Keys.text = "nah";
+                    break;
+
+            }
             _colliderObject.transform.rotation = Quaternion.identity;
+
             //UpdateTestBinds ();
             UpdateMoveData ();
             

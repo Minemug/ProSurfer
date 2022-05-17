@@ -150,6 +150,14 @@ namespace Fragsurf.Movement {
                                 }
                                 break;
                             }
+                            else if(ADandRamp > 90)
+                            {
+                                _surfer.moveData.velocity += AirInputMovement();
+
+                                // let the magic happen
+                                SurfPhysics.Reflect(ref _surfer.moveData.velocity, _surfer.collider, _surfer.moveData.origin, _deltaTime);
+                                break;
+                            }
                             else
                             {
                                 //check if speed isnt negative then slow down
