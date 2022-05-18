@@ -20,6 +20,8 @@ namespace Fragsurf.Movement {
         ///// Fields /////
         public Text Speed;
         public Text Keys;
+        public int avgFrameRate;
+        public Text display_Text;
         [Header("Physics Settings")]
         public Vector3 colliderSize = new Vector3 (1f, 2f, 1f);
         [HideInInspector] public ColliderType collisionType { get { return ColliderType.Box; } } // Capsule doesn't work anymore; I'll have to figure out why some other time, sorry.
@@ -236,6 +238,11 @@ namespace Fragsurf.Movement {
                     break;
 
             }
+            // fps indicator
+            float current = 0;
+            current = Time.frameCount / Time.time;
+            avgFrameRate = (int)current;
+            display_Text.text = avgFrameRate.ToString() + " FPS";
             _colliderObject.transform.rotation = Quaternion.identity;
 
             //UpdateTestBinds ();
