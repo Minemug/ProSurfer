@@ -26,8 +26,8 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                     SceneManager.LoadScene("Main");
                     break;
                 case "OPTIONS":
-                    Debug.Log("opcje");
-                    OpenOptions();
+                    Debug.Log("Opcje");
+                    SceneManager.LoadScene("Options");
                     break;
                 case "EXIT":
                     Application.Quit();
@@ -36,10 +36,7 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    private void OpenOptions()
-    {
-        text.gameObject.SetActive(false);
-    }
+  
 
     public void OnPointerEnter(PointerEventData eventData)
     {
