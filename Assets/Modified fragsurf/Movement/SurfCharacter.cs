@@ -59,6 +59,7 @@ namespace Fragsurf.Movement {
         [Header("Movement Config")] [SerializeField]
         public MovementConfig movementConfig;
 
+        
         private GameObject _groundObject;
         private Vector3 _baseVelocity;
         private Collider _collider;
@@ -257,6 +258,7 @@ namespace Fragsurf.Movement {
 
             _moveData.useStepOffset = useStepOffset;
             _moveData.stepOffset = stepOffset;
+            
         }
 
         private void Update()
@@ -280,7 +282,7 @@ namespace Fragsurf.Movement {
                     break;
 
             }
-
+            
             _colliderObject.transform.rotation = Quaternion.identity;
 
             //UpdateTestBinds ();

@@ -1005,6 +1005,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 80bb5b36427acc1438d8c37c0a78148f, type: 2}
+    - target: {fileID: 5465637953230015230, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5467285084242854812, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1101,6 +1105,10 @@ PrefabInstance:
       propertyPath: movementConfig.surfingMultiplayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6169734394688834513, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 43c48278140074d48aa08cb7f5c4f717, type: 2}
     - target: {fileID: 8710008205490035915, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: m_Name
       value: Example player prefab (1)
