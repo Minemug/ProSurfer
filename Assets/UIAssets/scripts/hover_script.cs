@@ -11,13 +11,14 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     public Image image;
     public AudioSource song;
+    public GameObject Main;
+    public GameObject Options;
     private Text text;
     private Color inColor;
     private Color outColor;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("klikles");
         if (text != null)
         {
             switch (text.text)
@@ -27,7 +28,8 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                     break;
                 case "OPTIONS":
                     Debug.Log("Opcje");
-                    SceneManager.LoadScene("Options");
+                    Main.SetActive(false);
+                    Options.SetActive(true);
                     break;
                 case "EXIT":
                     Application.Quit();
