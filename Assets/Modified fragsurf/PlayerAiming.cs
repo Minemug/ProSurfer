@@ -8,7 +8,7 @@ public class PlayerAiming : MonoBehaviour
 	[Header("Sensitivity")]
 	public float sensitivityMultiplier = 1f;
 	public float horizontalSensitivity = 1f;
-	public float verticalSensitivity   = 1f;
+	public float verticalSensitivity = 1f;
 
 	[Header("Restrictions")]
 	public float minYRotation = -90f;
@@ -34,7 +34,9 @@ public class PlayerAiming : MonoBehaviour
 	{
 		// Lock the mouse
 		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible   = false;
+		Cursor.visible = false;
+		sensitivityMultiplier = MainManager.Instance.sensivity;
+		Debug.Log(MainManager.Instance.sensivity);
 	}
 
 	private void Update()
@@ -47,10 +49,10 @@ public class PlayerAiming : MonoBehaviour
 
 		// Input
 		float xMovement = Input.GetAxisRaw("Mouse X") * horizontalSensitivity * sensitivityMultiplier;
-		float yMovement = -Input.GetAxisRaw("Mouse Y") * verticalSensitivity  * sensitivityMultiplier;
+		float yMovement = -Input.GetAxisRaw("Mouse Y") * verticalSensitivity * sensitivityMultiplier;
 
 		// Calculate real rotation from input
-		realRotation   = new Vector3(Mathf.Clamp(realRotation.x + yMovement, minYRotation, maxYRotation), realRotation.y + xMovement, realRotation.z);
+		realRotation = new Vector3(Mathf.Clamp(realRotation.x + yMovement, minYRotation, maxYRotation), realRotation.y + xMovement, realRotation.z);
 		realRotation.z = Mathf.Lerp(realRotation.z, 0f, Time.deltaTime * 3f);
 
 		//Apply real rotation to body
@@ -90,8 +92,10 @@ public class PlayerAiming : MonoBehaviour
 		}
 		else
 		{
-			punchAngle    = Vector2.zero;
+			punchAngle = Vector2.zero;
 			punchAngleVel = Vector2.zero;
 		}
 	}
 }
+
+
