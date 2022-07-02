@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GoBackButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public GameObject MainMenu;
     public GameObject OptionsMenu;
+    public GameObject ChooselevelMenu;
     public Image image;
     public AudioSource song;
     private Text text;
@@ -14,9 +16,19 @@ public class GoBackButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OptionsMenu.SetActive(false);
-        MainMenu.SetActive(true);
-        image.gameObject.SetActive(false);
+        if (OptionsMenu.activeSelf)
+        {
+            OptionsMenu.SetActive(false);
+            MainMenu.SetActive(true);
+            image.gameObject.SetActive(false);
+        }
+        else
+        {
+            MainMenu.SetActive(true);
+            ChooselevelMenu.SetActive(false);
+
+        }
+
         if (text != null)
         {
             text.color = outColor;

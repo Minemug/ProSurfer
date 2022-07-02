@@ -13,6 +13,7 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public AudioSource song;
     public GameObject Main;
     public GameObject Options;
+    public GameObject ChooseLevel;
     private Text text;
     private Color inColor;
     private Color outColor;
@@ -24,12 +25,21 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             switch (text.text)
             {
                 case "PLAY":
-                    SceneManager.LoadScene("Main");
+                    Main.SetActive(false);
+                    ChooseLevel.SetActive(true);
                     break;
                 case "OPTIONS":
-                    Debug.Log("Opcje");
                     Main.SetActive(false);
                     Options.SetActive(true);
+                    break;
+                case "LEVEL 1":
+                    SceneManager.LoadScene("Level1");
+                    break;
+                case "LEVEL 2":
+                    SceneManager.LoadScene("Level2");
+                    break;
+                case "LEVEL 3":
+                    SceneManager.LoadScene("Level3");
                     break;
                 case "EXIT":
                     Application.Quit();
