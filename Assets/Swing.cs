@@ -16,5 +16,7 @@ public class Swing : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0) && anim.gameObject.activeSelf)
             anim.SetTrigger("LMB");
+        if(Input.GetMouseButtonDown(1) && anim.gameObject.activeSelf)
+            anim.SetTrigger("RMB");
     }
 }

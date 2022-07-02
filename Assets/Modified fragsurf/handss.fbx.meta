@@ -9,6 +9,9 @@ ModelImporter:
   - first:
       74: -4738338977195520429
     second: Swing
+  - first:
+      74: -7979655156338052080
+    second: Knife_On_Palm
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -72,6 +75,35 @@ ModelImporter:
       internalID: 0
       firstFrame: 0
       lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Knife_On_Palm
+      takeName: Knife_On_Palm
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 180
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
