@@ -26,7 +26,6 @@ public class GoBackButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             MainMenu.SetActive(true);
             ChooselevelMenu.SetActive(false);
-
         }
 
         if (text != null)

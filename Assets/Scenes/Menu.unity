@@ -2382,7 +2382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &533288037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3059,6 +3059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainMenu: {fileID: 1904545813}
   OptionsMenu: {fileID: 2143010129}
+  ChooselevelMenu: {fileID: 0}
   image: {fileID: 836018425}
   song: {fileID: 1990398221}
 --- !u!1 &824791855
@@ -3716,7 +3717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 354.61792, y: -0.0000076293945}
+  m_AnchoredPosition: {x: 389, y: -49}
   m_SizeDelta: {x: 423.6654, y: 207.7002}
   m_Pivot: {x: 0.4778549, y: 0.49999997}
 --- !u!114 &908179164
@@ -4221,7 +4222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -54.328278, y: 166.59451}
+  m_AnchoredPosition: {x: -119, y: 237}
   m_SizeDelta: {x: 343.5903, y: 120.926}
   m_Pivot: {x: 0.4778549, y: 0.49999997}
 --- !u!114 &965792616
@@ -5876,6 +5877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainMenu: {fileID: 1904545813}
   OptionsMenu: {fileID: 2143010129}
+  ChooselevelMenu: {fileID: 533288036}
   image: {fileID: 836018425}
   song: {fileID: 1990398221}
 --- !u!114 &1522473427
@@ -7409,7 +7411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1904545814
 RectTransform:
   m_ObjectHideFlags: 0
