@@ -35,8 +35,15 @@ public class PlayerAiming : MonoBehaviour
 		// Lock the mouse
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
-		sensitivityMultiplier = MainManager.Instance.sensivity;
-		Debug.Log(MainManager.Instance.sensivity);
+		if(MainManager.Instance == null)
+        {
+			Debug.Log("bez managera");
+        }
+        else
+        {
+			sensitivityMultiplier = MainManager.Instance.sensivity;
+			Debug.Log("sens ustawiony na " + MainManager.Instance.sensivity);
+        }
 	}
 
 	private void Update()

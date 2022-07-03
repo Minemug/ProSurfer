@@ -7,8 +7,7 @@ namespace Fragsurf.Movement
 {
     public class ApplyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
         public Image image;
-        public AudioSource effectsSource;
-        public AudioSource musicSource;
+        public AudioSource effectsSource, musicSource;
         private Text text;
         private Color inColor;
         private Color outColor;
