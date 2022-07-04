@@ -23,7 +23,8 @@ namespace Fragsurf.Movement {
         ///// Fields /////
         public Text Speed;
         public Text Keys;
-//<<<<<<< HEAD
+        public GameObject FinishScreen;
+
         [Header("Physics Settings")] public Vector3 colliderSize = new Vector3(1f, 2f, 1f);
 
         [HideInInspector]
@@ -33,13 +34,6 @@ namespace Fragsurf.Movement {
         } 
         // Capsule doesn't work anymore; I'll have to figure out why some other time, sorry.
 
-//=======
-//        //public int avgFrameRate;
-//        //public Text display_Text;
-//        [Header("Physics Settings")]
-//        public Vector3 colliderSize = new Vector3 (1f, 2f, 1f);
-//        [HideInInspector] public ColliderType collisionType { get { return ColliderType.Box; } } // Capsule doesn't work anymore; I'll have to figure out why some other time, sorry.
-//>>>>>>> develop
         public float weight = 75f;
         public float rigidbodyPushForce = 2f;
         public bool solidCollider = false;
@@ -291,15 +285,6 @@ namespace Fragsurf.Movement {
                     break;
 
             }
-//<<<<<<< HEAD
-            
-//=======
-//            // fps indicator
-//            float current = 0;
-//            current = Time.frameCount / Time.time;
-//            avgFrameRate = (int)current;
-//            display_Text.text = avgFrameRate.ToString() + " FPS";
-//>>>>>>> develop
             _colliderObject.transform.rotation = Quaternion.identity;
 
             //UpdateTestBinds ();
@@ -445,6 +430,16 @@ namespace Fragsurf.Movement {
             if (other.gameObject.tag == "Finish")
             {
                 Debug.Log("You Win!");
+                //actually stop the time
+                Time.timeScale = 0;
+                //show to finish overlay
+                FinishScreen.SetActive(true);
+                // show the cursor back
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                //disable onscreen variables
+                Speed.gameObject.SetActive(false);
+                Keys.gameObject.SetActive(false);
             }
         }
 
