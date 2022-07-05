@@ -465,6 +465,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensivity: 0
   fov: 0
+  musicVol: 0
+  effectsVol: 0
 --- !u!1 &64672411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,8 +1824,8 @@ RectTransform:
   m_Father: {fileID: 1470451042}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.0525, y: 0}
-  m_AnchorMax: {x: 0.0525, y: 1}
+  m_AnchorMin: {x: 0.16666667, y: 0}
+  m_AnchorMax: {x: 0.16666667, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2923,7 +2925,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.0525, y: 1}
+  m_AnchorMax: {x: 0.16666667, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6237,7 +6239,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 6
   m_WholeNumbers: 0
-  m_Value: 0.315
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

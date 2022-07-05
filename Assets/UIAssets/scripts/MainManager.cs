@@ -5,8 +5,8 @@ using UnityEngine;
 public class MainManager : MonoBehaviour
 {
     public static MainManager Instance;
-    public float sensivity;
-    public float fov;
+    public float sensivity, fov, musicVol, effectsVol;
+    
 
     private void Awake()
     {
@@ -19,6 +19,8 @@ public class MainManager : MonoBehaviour
         Instance = this;
         sensivity = 1f;
         fov = 90f;
+        musicVol = 70f;
+        effectsVol = 70f;
         DontDestroyOnLoad(gameObject);
     }
 }

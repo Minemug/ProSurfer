@@ -429,7 +429,6 @@ namespace Fragsurf.Movement {
                 triggers.Add(other);
             if (other.gameObject.tag == "Finish")
             {
-                Debug.Log("You Win!");
                 //actually stop the time
                 Time.timeScale = 0;
                 //show to finish overlay

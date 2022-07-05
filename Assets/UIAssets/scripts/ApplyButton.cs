@@ -27,8 +27,12 @@ namespace Fragsurf.Movement
         {
             effectsSource.volume = effects.value;
             musicSource.volume = music.value;
+            // set manager variables
+            MainManager.Instance.effectsVol = effects.value;
+            MainManager.Instance.musicVol = music.value;
             MainManager.Instance.sensivity = sens.value;
             MainManager.Instance.fov = fov.value;
+
             _music.text = Math.Round(music.value*100,0).ToString();
             _effects.text = Math.Round(effects.value*100,0).ToString();
             _fov.text = Math.Round(fov.value,0).ToString();
