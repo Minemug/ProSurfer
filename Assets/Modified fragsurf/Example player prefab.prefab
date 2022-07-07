@@ -226,7 +226,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601d4686cc0b70d45a98271d52094850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FinishScreen: {fileID: 4941331801863025214, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+  FinishScreen: {fileID: 0}
+  HUD: {fileID: 0}
+  TimeVar: {fileID: 0}
+  MaxSpeed: {fileID: 0}
+  FinishSound: {fileID: 0}
   Speed: {fileID: 0}
   Keys: {fileID: 0}
   Timer: {fileID: 0}
@@ -238,28 +242,28 @@ MonoBehaviour:
   playerRotationTransform: {fileID: 5467285084242854812}
   crouchingHeightMultiplier: 0.5
   crouchingSpeed: 10
-  crouchingEnabled: 1
+  crouchingEnabled: 0
   slidingEnabled: 0
-  laddersEnabled: 1
-  supportAngledLadders: 1
+  laddersEnabled: 0
+  supportAngledLadders: 0
   useStepOffset: 0
   stepOffset: 0.35
   movementConfig:
-    fallingspeed: 1
+    fallingspeed: 4
     yChangeFactor: 1
     RampAccelaration: 1
-    RampDeccelaration: 0.5
+    RampDeccelaration: 1.2
     autoBhop: 1
     gravity: 20
     jumpForce: 6.5
     friction: 6
     maxSpeed: 6
     maxVelocity: 50
-    slopeLimit: 45
+    slopeLimit: 75
     clampAirSpeed: 0
-    airCap: 0.6
-    airAcceleration: 6
-    airFriction: 0.4
+    airCap: 1
+    airAcceleration: 10
+    airFriction: 0
     walkSpeed: 7
     sprintSpeed: 12
     acceleration: 14

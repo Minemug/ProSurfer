@@ -21,7 +21,13 @@ namespace Fragsurf.Movement {
         }
 
         ///// Fields /////
+        ///finishui
         public GameObject FinishScreen;
+        public GameObject HUD;
+        public Text TimeVar;
+        public Text MaxSpeed;
+        public AudioSource FinishSound, GameMusic;
+        //overlay during the game
         public Text Speed;
         public Text Keys;
         public Text Timer;
@@ -267,7 +273,7 @@ namespace Fragsurf.Movement {
             _moveData.stepOffset = stepOffset;
             
         }
-
+        float maximumSpeed = 1;
         private void Update()
         {
             //Respawn
@@ -275,29 +281,8 @@ namespace Fragsurf.Movement {
                 ResetPosition();
             // Speed indicator
             Speed.text = _moveData.velocity.magnitude.ToString("F2");
-            // Keyboard indicator
-            switch (_moveData.horizontalAxis)
-            {
-                case -1:
-                    Keys.text = "A";
-                    break;
-                case 1:
-                    Keys.text = "D";
-                    break;
-                default:
-                    Keys.text = "nah";
-                    break;
-
-            }
-//<<<<<<< HEAD
-
-//=======
-//            // fps indicator
-//            float current = 0;
-//            current = Time.frameCount / Time.time;
-//            avgFrameRate = (int)current;
-//            display_Text.text = avgFrameRate.ToString() + " FPS";
-//>>>>>>> develop
+            if (_moveData.velocity.magnitude > maximumSpeed)
+                maximumSpeed = _moveData.velocity.magnitude;
             _colliderObject.transform.rotation = Quaternion.identity;
 
             //UpdateTestBinds ();
@@ -461,9 +446,14 @@ namespace Fragsurf.Movement {
 
                 //actually stop the time
                 Time.timeScale = 0;
+                HUD.SetActive(false);
+                GameMusic.Stop();
+                FinishSound.Play();
                 //show to finish overlay
                 FinishScreen.SetActive(true);
-                
+                TimeVar.text = FormatTime(_timer);
+                MaxSpeed.text = maximumSpeed.ToString("F2");
+
 
                 // show the cursor back
                 Cursor.lockState = CursorLockMode.None;

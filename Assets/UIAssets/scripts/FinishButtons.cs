@@ -19,7 +19,7 @@ public class FinishButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             case "PlayAgain":
                 //load scene again, lock the mouse and unpause the game
-                SceneManager.LoadScene("Level1");
+                SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 break;

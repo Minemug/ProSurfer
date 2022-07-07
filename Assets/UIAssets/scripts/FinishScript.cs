@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class FinishScript : MonoBehaviour
 {
     public Canvas FinishMenu;
-    
+    public Text timeVar;
 
 
 
