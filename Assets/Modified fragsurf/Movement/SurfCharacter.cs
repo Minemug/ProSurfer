@@ -374,6 +374,7 @@ namespace Fragsurf.Movement {
             _timer = 0;
             TimerStarted = false;
             Timer.text = "0";
+            maximumSpeed = 0;
         }
 
         private void UpdateMoveData()
@@ -471,6 +472,7 @@ namespace Fragsurf.Movement {
                 //show to finish overlay
                 FinishScreen.SetActive(true);
                 TimeVar.text = FormatTime(_timer);
+                maximumSpeed = maximumSpeed * 10;
                 MaxSpeed.text = maximumSpeed.ToString("F2");
 
 
