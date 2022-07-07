@@ -85,7 +85,7 @@ namespace Fragsurf.Movement {
 
         private List<Collider> triggers = new List<Collider>();
         private int numberOfTriggers = 0;
-
+        private float speed_text;
         private bool underwater = false;
         bool TimerStarted = false;
         private float _timer = 0;
@@ -278,7 +278,8 @@ namespace Fragsurf.Movement {
             if (transform.position.y < -300 || Input.GetKeyDown(KeyCode.R))
                 ResetPosition();
             // Speed indicator
-            Speed.text = _moveData.velocity.magnitude.ToString("F2");
+            speed_text = _moveData.velocity.magnitude * 10;
+            Speed.text = speed_text.ToString("F2");
             //save highest speed
             if (_moveData.velocity.magnitude > maximumSpeed)
                 maximumSpeed = _moveData.velocity.magnitude;
