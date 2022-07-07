@@ -6,6 +6,7 @@ public class MainManager : MonoBehaviour
 {
     public static MainManager Instance;
     public float sensivity, fov, musicVol, effectsVol;
+    public bool OptionsScene;
     
 
     private void Awake()
@@ -21,6 +22,7 @@ public class MainManager : MonoBehaviour
         fov = 90f;
         musicVol = 70f;
         effectsVol = 70f;
+        OptionsScene = false;
         DontDestroyOnLoad(gameObject);
     }
 }

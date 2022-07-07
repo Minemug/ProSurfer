@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class AudioScript : MonoBehaviour
 {
 
-    public AudioSource music, effects;
+    public AudioSource music, effects, menuMusic;
     
     
     // Start is called before the first frame update
@@ -14,14 +14,16 @@ public class AudioScript : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex > 0)
         {
-            music.Stop();
+            menuMusic.Stop();
         }
+
         if(MainManager.Instance != null)
         {
             effects.volume = MainManager.Instance.effectsVol;
+            music.volume = MainManager.Instance.musicVol;
         }else
         {
-            Debug.Log("dzwiek nei od managera");
+            Debug.Log("dzwiek nie ustawiony przez managera");
         }
     }
 }

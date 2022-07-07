@@ -22,10 +22,8 @@ namespace Fragsurf.Movement {
 
         ///// Fields /////
         ///finishui
-        public GameObject FinishScreen;
-        public GameObject HUD;
-        public Text TimeVar;
-        public Text MaxSpeed;
+        public GameObject FinishScreen, HUD, EscapeOverlay;
+        public Text TimeVar, MaxSpeed;
         public AudioSource FinishSound, GameMusic;
         //overlay during the game
         public Text Speed;
@@ -281,12 +279,31 @@ namespace Fragsurf.Movement {
                 ResetPosition();
             // Speed indicator
             Speed.text = _moveData.velocity.magnitude.ToString("F2");
+            //save highest speed
             if (_moveData.velocity.magnitude > maximumSpeed)
                 maximumSpeed = _moveData.velocity.magnitude;
             _colliderObject.transform.rotation = Quaternion.identity;
-
+            
             //UpdateTestBinds ();
+
+            // ESCAPE 
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (EscapeOverlay.activeInHierarchy)
+                {
+                    EscapeOverlay.SetActive(false);
+                    PlayTheGame();
+                }
+                else
+                {
+                    EscapeOverlay.SetActive(true);
+                    StopTheGame();
+
+                }
+            }
+
             UpdateMoveData();
+
 
             // Previous movement code
             Vector3 positionalMovement = transform.position - prevPosition;
@@ -372,6 +389,8 @@ namespace Fragsurf.Movement {
             if (!Input.GetButton("Crouch"))
                 _moveData.crouching = false;
 
+            
+
             bool moveLeft = _moveData.horizontalAxis < 0f;
             bool moveRight = _moveData.horizontalAxis > 0f;
             bool moveFwd = _moveData.verticalAxis > 0f;
@@ -441,11 +460,10 @@ namespace Fragsurf.Movement {
             if (other.gameObject.tag == "Finish")
             {
                 if (TimerStarted) TimerStarted = false;
-                
-                Debug.Log(_timer);
 
+                Debug.Log(_timer);
+                StopTheGame();
                 //actually stop the time
-                Time.timeScale = 0;
                 HUD.SetActive(false);
                 GameMusic.Stop();
                 FinishSound.Play();
@@ -455,16 +473,27 @@ namespace Fragsurf.Movement {
                 MaxSpeed.text = maximumSpeed.ToString("F2");
 
 
-                // show the cursor back
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
                 //disable onscreen variables
                 Speed.gameObject.SetActive(false);
                 Keys.gameObject.SetActive(false);
             }
-            
+
         }
-        
+
+        private static void StopTheGame()
+        {
+            Time.timeScale = 0;
+            // show the cursor back
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        private static void PlayTheGame()
+        {
+            Time.timeScale = 1;
+            // show the cursor back
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         private void OnTriggerExit(Collider other)
         {
