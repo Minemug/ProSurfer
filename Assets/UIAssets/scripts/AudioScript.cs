@@ -12,10 +12,16 @@ public class AudioScript : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        if(SceneManager.GetActiveScene().buildIndex > 0)
+        if (SceneManager.GetActiveScene().buildIndex > 0)
         {
             music.Stop();
         }
-        effects.volume = MainManager.Instance.effectsVol;
+        if(MainManager.Instance != null)
+        {
+            effects.volume = MainManager.Instance.effectsVol;
+        }else
+        {
+            Debug.Log("dzwiek nei od managera");
+        }
     }
 }

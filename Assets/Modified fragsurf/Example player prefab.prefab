@@ -226,8 +226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601d4686cc0b70d45a98271d52094850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishScreen: {fileID: 4941331801863025214, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
   Speed: {fileID: 0}
   Keys: {fileID: 0}
+  Timer: {fileID: 0}
   colliderSize: {x: 1, y: 2, z: 1}
   weight: 75
   rigidbodyPushForce: 2

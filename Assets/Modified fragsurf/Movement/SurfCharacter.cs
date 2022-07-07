@@ -21,6 +21,7 @@ namespace Fragsurf.Movement {
         }
 
         ///// Fields /////
+        public GameObject FinishScreen;
         public Text Speed;
         public Text Keys;
         public Text Timer;
@@ -34,13 +35,7 @@ namespace Fragsurf.Movement {
         } 
         // Capsule doesn't work anymore; I'll have to figure out why some other time, sorry.
 
-//=======
-//        //public int avgFrameRate;
-//        //public Text display_Text;
-//        [Header("Physics Settings")]
-//        public Vector3 colliderSize = new Vector3 (1f, 2f, 1f);
-//        [HideInInspector] public ColliderType collisionType { get { return ColliderType.Box; } } // Capsule doesn't work anymore; I'll have to figure out why some other time, sorry.
-//>>>>>>> develop
+
         public float weight = 75f;
         public float rigidbodyPushForce = 2f;
         public bool solidCollider = false;
@@ -141,6 +136,7 @@ namespace Fragsurf.Movement {
         }
 
         Vector3 prevPosition;
+        
 
         ///// Methods /////
 
@@ -460,8 +456,21 @@ namespace Fragsurf.Movement {
             if (other.gameObject.tag == "Finish")
             {
                 if (TimerStarted) TimerStarted = false;
-                Debug.Log("You Win!");
                 
+                Debug.Log(_timer);
+
+                //actually stop the time
+                Time.timeScale = 0;
+                //show to finish overlay
+                FinishScreen.SetActive(true);
+                
+
+                // show the cursor back
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                //disable onscreen variables
+                Speed.gameObject.SetActive(false);
+                Keys.gameObject.SetActive(false);
             }
             
         }
