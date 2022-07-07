@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOUR MAXIMUm speed
+  m_Text: MAXIMUm speed
 --- !u!1 &4941331800079847919
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOUR TIME WAS
+  m_Text: YOUR TIME
 --- !u!1 &4941331800940119271
 GameObject:
   m_ObjectHideFlags: 0
