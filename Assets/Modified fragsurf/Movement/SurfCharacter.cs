@@ -23,6 +23,7 @@ namespace Fragsurf.Movement {
         ///// Fields /////
         public Text Speed;
         public Text Keys;
+        public Text Timer;
 //<<<<<<< HEAD
         [Header("Physics Settings")] public Vector3 colliderSize = new Vector3(1f, 2f, 1f);
 
@@ -77,7 +78,7 @@ namespace Fragsurf.Movement {
         private GameObject _colliderObject;
         private GameObject _cameraWaterCheckObject;
         private CameraWaterCheck _cameraWaterCheck;
-
+        
         private MoveData _moveData = new MoveData();
         private SurfController _controller = new SurfController();
 
@@ -87,7 +88,8 @@ namespace Fragsurf.Movement {
         private int numberOfTriggers = 0;
 
         private bool underwater = false;
-
+        bool TimerStarted = false;
+        private float _timer = 0;
         ///// Properties /////
 
         public MoveType moveType
@@ -273,10 +275,10 @@ namespace Fragsurf.Movement {
         private void Update()
         {
             //Respawn
-            if (transform.position.y < -200)
+            if (transform.position.y < -300 || Input.GetKeyDown(KeyCode.R))
                 ResetPosition();
             // Speed indicator
-            Speed.text = _moveData.velocity.magnitude.ToString();
+            Speed.text = _moveData.velocity.magnitude.ToString("F2");
             // Keyboard indicator
             switch (_moveData.horizontalAxis)
             {
@@ -292,7 +294,7 @@ namespace Fragsurf.Movement {
 
             }
 //<<<<<<< HEAD
-            
+
 //=======
 //            // fps indicator
 //            float current = 0;
@@ -343,9 +345,20 @@ namespace Fragsurf.Movement {
             prevPosition = transform.position;
 
             _colliderObject.transform.rotation = Quaternion.identity;
-
+            if (TimerStarted)
+            {
+                _timer += Time.deltaTime;
+                Timer.text = FormatTime(_timer);
+            }
         }
-
+    
+        public string FormatTime( float time )
+        {
+            int minutes = (int) time / 60 ;
+            int seconds = (int) time - 60 * minutes;
+            int milliseconds = (int) (1000 * (time - minutes * 60 - seconds));
+            return string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds );
+        }
         private void UpdateTestBinds()
         {
 
@@ -359,7 +372,9 @@ namespace Fragsurf.Movement {
 
             moveData.velocity = Vector3.zero;
             moveData.origin = _startPosition;
-
+            _timer = 0;
+            TimerStarted = false;
+            Timer.text = "0";
         }
 
         private void UpdateMoveData()
@@ -444,16 +459,24 @@ namespace Fragsurf.Movement {
                 triggers.Add(other);
             if (other.gameObject.tag == "Finish")
             {
+                if (TimerStarted) TimerStarted = false;
                 Debug.Log("You Win!");
+                
             }
+            
         }
+        
 
         private void OnTriggerExit(Collider other)
         {
 
             if (triggers.Contains(other))
                 triggers.Remove(other);
-
+            if (other.gameObject.tag == "Timer")
+            {
+                if (!TimerStarted) TimerStarted = true;
+                
+            }
         }
 
         private void OnCollisionStay(Collision collision)
