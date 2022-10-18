@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Image image;
+    public Image LvlImage;
     public AudioSource song;
     public GameObject Main;
     public GameObject Options;

@@ -26,6 +26,19 @@ public class FinishButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             case "BackToMenu":
                 SceneManager.LoadScene("Menu");
                 break;
+            case "NextLevel":
+                switch (SceneManager.GetActiveScene().name)
+                {
+                    case "Level1":
+                        SceneManager.LoadScene("Level2");
+                        break;
+                    case "Level2":
+                        SceneManager.LoadScene("Level3");
+                        break;
+                    default:
+                        break;
+                }
+                break;
             case "Options":
                 if(MainManager.Instance != null)
                     MainManager.Instance.OptionsScene = true;
