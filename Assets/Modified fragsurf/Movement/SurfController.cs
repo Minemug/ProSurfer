@@ -137,16 +137,18 @@ namespace Fragsurf.Movement {
                                 var angle = v2 - 90;
                                 var _speed = _surfer.moveData.velocity.magnitude;
                                 // move up and down
-                                _surfer.moveData.origin.y += angle * _speed * _config.yChangeFactor / 10000;
+                                //_surfer.moveData.origin.y += angle * _speed * _config.yChangeFactor / 10000;
 
                                 //accelarate when sliding down or up the slope
                                if(angle < 0)
                                 {
-                                    _surfer.moveData.velocity += _surfer.forward * angle * -1 * _config.RampAccelaration/1000;
+                                    _surfer.moveData.velocity += _surfer.forward * angle * -1 * _config.RampAccelaration * _deltaTime;
+
+                                    _surfer.moveData.origin.y += angle * _speed * _config.yChangeFactor / 1000 * _deltaTime;
                                 }
                                 else
                                 {
-                                    _surfer.moveData.velocity += _surfer.forward * angle * -1 * _config.RampDeccelaration/1000;
+                                    _surfer.moveData.velocity += _surfer.forward * angle * -1 * _config.RampDeccelaration * _deltaTime;
                                 }
                                 break;
                             }

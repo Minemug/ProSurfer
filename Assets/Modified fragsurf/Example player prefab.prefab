@@ -228,9 +228,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FinishScreen: {fileID: 0}
   HUD: {fileID: 0}
+  EscapeOverlay: {fileID: 0}
   TimeVar: {fileID: 0}
   MaxSpeed: {fileID: 0}
   FinishSound: {fileID: 0}
+  GameMusic: {fileID: 0}
   Speed: {fileID: 0}
   Keys: {fileID: 0}
   Timer: {fileID: 0}
@@ -250,9 +252,9 @@ MonoBehaviour:
   stepOffset: 0.35
   movementConfig:
     fallingspeed: 4
-    yChangeFactor: 1
-    RampAccelaration: 1
-    RampDeccelaration: 1.2
+    yChangeFactor: 30
+    RampAccelaration: 0.4
+    RampDeccelaration: 0.3
     autoBhop: 1
     gravity: 20
     jumpForce: 6.5
