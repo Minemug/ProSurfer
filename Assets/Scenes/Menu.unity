@@ -672,7 +672,6 @@ GameObject:
   - component: {fileID: 214652226}
   - component: {fileID: 214652229}
   - component: {fileID: 214652228}
-  - component: {fileID: 214652227}
   m_Layer: 5
   m_Name: Level3
   m_TagString: Untagged
@@ -699,24 +698,6 @@ RectTransform:
   m_AnchoredPosition: {x: 684, y: -94}
   m_SizeDelta: {x: 200, y: 130}
   m_Pivot: {x: 0.46364382, y: 0.5}
---- !u!114 &214652227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214652225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ebf1a4374ca324cbd172a8ef6892db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 1040771553}
-  LvlImage: {fileID: 0}
-  song: {fileID: 1990398221}
-  Main: {fileID: 533288036}
-  Options: {fileID: 2143010129}
-  ChooseLevel: {fileID: 533288036}
 --- !u!114 &214652228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2674,7 +2655,6 @@ GameObject:
   - component: {fileID: 651751763}
   - component: {fileID: 651751766}
   - component: {fileID: 651751765}
-  - component: {fileID: 651751764}
   m_Layer: 5
   m_Name: Level1
   m_TagString: Untagged
@@ -2701,24 +2681,6 @@ RectTransform:
   m_AnchoredPosition: {x: -238, y: -94}
   m_SizeDelta: {x: 200, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &651751764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651751762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ebf1a4374ca324cbd172a8ef6892db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 1837373933}
-  LvlImage: {fileID: 0}
-  song: {fileID: 1990398221}
-  Main: {fileID: 533288036}
-  Options: {fileID: 2143010129}
-  ChooseLevel: {fileID: 533288036}
 --- !u!114 &651751765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4443,7 +4405,6 @@ GameObject:
   - component: {fileID: 1001848685}
   - component: {fileID: 1001848688}
   - component: {fileID: 1001848687}
-  - component: {fileID: 1001848686}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: Untagged
@@ -4470,24 +4431,6 @@ RectTransform:
   m_AnchoredPosition: {x: -678, y: -94}
   m_SizeDelta: {x: 236.4216, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1001848686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001848684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ebf1a4374ca324cbd172a8ef6892db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 1379381756}
-  LvlImage: {fileID: 0}
-  song: {fileID: 1990398221}
-  Main: {fileID: 533288036}
-  Options: {fileID: 2143010129}
-  ChooseLevel: {fileID: 533288036}
 --- !u!114 &1001848687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7962,7 +7905,6 @@ GameObject:
   - component: {fileID: 1883170789}
   - component: {fileID: 1883170792}
   - component: {fileID: 1883170791}
-  - component: {fileID: 1883170790}
   m_Layer: 5
   m_Name: Level2
   m_TagString: Untagged
@@ -7989,24 +7931,6 @@ RectTransform:
   m_AnchoredPosition: {x: 220, y: -94}
   m_SizeDelta: {x: 200, y: 130}
   m_Pivot: {x: 0.46364382, y: 0.5}
---- !u!114 &1883170790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883170788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ebf1a4374ca324cbd172a8ef6892db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 578704876}
-  LvlImage: {fileID: 0}
-  song: {fileID: 1990398221}
-  Main: {fileID: 533288036}
-  Options: {fileID: 2143010129}
-  ChooseLevel: {fileID: 533288036}
 --- !u!114 &1883170791
 MonoBehaviour:
   m_ObjectHideFlags: 0
