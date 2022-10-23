@@ -11,6 +11,7 @@ public class MenuWakeUp : MonoBehaviour
     {
         if (MainManager.Instance.OptionsScene)
         {
+            MainManager.Instance.OptionsScene = false;
             MainMenu.SetActive(false);
             Options.SetActive(true);
         }

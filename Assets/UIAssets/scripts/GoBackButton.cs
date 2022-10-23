@@ -16,6 +16,11 @@ public class GoBackButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        image.gameObject.SetActive(false);
+        if (text != null)
+        {
+            text.color = outColor;
+        }
         if (OptionsMenu.activeSelf)
         {
             OptionsMenu.SetActive(false);

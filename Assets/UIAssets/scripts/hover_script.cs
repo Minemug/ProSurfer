@@ -16,11 +16,13 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public GameObject Options;
     public GameObject ChooseLevel;
     private Text text;
-    private Color inColor;
-    private Color outColor;
+    private Color inColor = Color.black;
+    private Color outColor = Color.white;
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        DisableHighlight();
+
         if (text != null)
         {
             switch (text.text)
@@ -30,6 +32,14 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                     ChooseLevel.SetActive(true);
                     break;
                 case "OPTIONS":
+                    Main.SetActive(false);
+                    Options.SetActive(true);
+                    break;
+                case "CONTROLS":
+                    Main.SetActive(false);
+                    Options.SetActive(true);
+                    break;
+                case "CREDITS":
                     Main.SetActive(false);
                     Options.SetActive(true);
                     break;
@@ -65,9 +75,13 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        
+        DisableHighlight();
+    }
+
+    private void DisableHighlight()
+    {
         image.gameObject.SetActive(false);
-        if(text != null)
+        if (text != null)
         {
             text.color = outColor;
         }
@@ -77,8 +91,6 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void Start()
     {
         text = gameObject.GetComponent<Text>();
-        inColor = Color.black;
-        outColor = Color.white;
     }
 
     
