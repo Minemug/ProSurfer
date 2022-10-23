@@ -7,10 +7,6 @@ public class MenuWakeUp : MonoBehaviour
 {
     public GameObject MainMenu, Options;
     // Start is called before the first frame update
-    void Awake()
-    {
-        
-    }
     private void Start()
     {
         if (MainManager.Instance.OptionsScene)

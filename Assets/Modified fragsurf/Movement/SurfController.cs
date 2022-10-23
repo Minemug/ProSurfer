@@ -124,6 +124,14 @@ namespace Fragsurf.Movement {
                         /*
                         //  GROUND MOVEMENT
                         */
+                        if(_surfer.groundObject.tag == "Edge")
+                        {
+                            _surfer.moveData.velocity += AirInputMovement();
+
+                            // let the magic happen
+                            SurfPhysics.Reflect(ref _surfer.moveData.velocity, _surfer.collider, _surfer.moveData.origin, _deltaTime);
+                            break;
+                        }
                         if (_surfer.groundObject.layer == 6)
                         {
                             var AD = _surfer.right * _surfer.moveData.horizontalAxis * -1;
@@ -131,14 +139,11 @@ namespace Fragsurf.Movement {
                             var ADandRamp = Vector3.Angle( rampSurface.planeNormal, AD);
                             var v2 = Vector3.Angle( rampSurface.planeNormal, dir);
                             //if holding key against plane
+                            var _speed = _surfer.moveData.velocity.magnitude;
+                            var angle = v2 - 90;
                             if (ADandRamp < 90 && ADandRamp != 0)
                             {
                                 //surf
-                                var angle = v2 - 90;
-                                var _speed = _surfer.moveData.velocity.magnitude;
-                                // move up and down
-                                //_surfer.moveData.origin.y += angle * _speed * _config.yChangeFactor / 10000;
-
                                 //accelarate when sliding down or up the slope
                                if(angle < 0)
                                 {
@@ -163,9 +168,12 @@ namespace Fragsurf.Movement {
                             else
                             {
                                 //check if speed isnt negative then slow down
-                                if(math > 0f)
-                                    _surfer.moveData.velocity -= _surfer.moveData.velocity * 0.05f;
-                                _surfer.moveData.velocity.y =-  _config.fallingspeed;
+                                //if(math > 0f)
+                                _surfer.moveData.velocity.y -= _config.fallingspeed * _deltaTime *100;
+
+                                Debug.Log(_surfer.moveData.velocity + "vel");
+                                Debug.Log(_surfer.forward + "for");
+                                
                                 break;
                             }
                             

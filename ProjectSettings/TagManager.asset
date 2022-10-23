@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Spawn
   - Timer
+  - Edge
   layers:
   - Default
   - TransparentFX

@@ -279,7 +279,9 @@ namespace Fragsurf.Movement {
                 ResetPosition();
             // Speed indicator
             speed_text = _moveData.velocity.magnitude * 10;
-            Speed.text = speed_text.ToString("F2");
+            if (Speed != null) { 
+                Speed.text = speed_text.ToString("F2");
+            }
             //save highest speed
             if (_moveData.velocity.magnitude > maximumSpeed)
                 maximumSpeed = _moveData.velocity.magnitude;
@@ -344,6 +346,7 @@ namespace Fragsurf.Movement {
             prevPosition = transform.position;
 
             _colliderObject.transform.rotation = Quaternion.identity;
+
             if (TimerStarted)
             {
                 _timer += Time.deltaTime;
@@ -479,6 +482,11 @@ namespace Fragsurf.Movement {
                 //disable onscreen variables
                 Speed.gameObject.SetActive(false);
                 Keys.gameObject.SetActive(false);
+            }
+            if (other.gameObject.tag == "Edge")
+            {
+                //Debug.Log("edge");
+                
             }
 
         }
