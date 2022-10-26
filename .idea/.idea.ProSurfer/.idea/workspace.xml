@@ -9,6 +9,8 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Modified fragsurf/Movement/SurfCharacter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/tut.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/GraphicRaycaster.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -30,6 +32,14 @@
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Build\ProSurfer.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\Pawel\Documents\GitHub\ProSurfer\Build" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\Program Files\Unity\Hub\Editor\2020.3.30f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\Pawel\Documents\GitHub\ProSurfer -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
@@ -79,6 +89,10 @@
       <workItem from="1657132424295" duration="470000" />
       <workItem from="1657194560524" duration="3704000" />
       <workItem from="1657226573879" duration="606000" />
+      <workItem from="1666352261945" duration="898000" />
+      <workItem from="1666362965045" duration="5856000" />
+      <workItem from="1666720606248" duration="7550000" />
+      <workItem from="1666734868434" duration="1673000" />
     </task>
     <servers />
   </component>

@@ -6,7 +6,10 @@ TagManager:
   tags:
   - Spawn
   - Timer
-  - Edge
+  - Tut_start
+  - Tut_jump
+  - Tut_bh
+  - Tut_surf
   layers:
   - Default
   - TransparentFX

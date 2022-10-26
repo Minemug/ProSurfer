@@ -29,6 +29,9 @@ public class FinishButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             case "NextLevel":
                 switch (SceneManager.GetActiveScene().name)
                 {
+                    case "Tutorial":
+                        SceneManager.LoadScene("Level1");
+                        break;
                     case "Level1":
                         SceneManager.LoadScene("Level2");
                         break;
