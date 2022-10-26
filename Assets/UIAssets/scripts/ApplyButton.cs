@@ -7,10 +7,9 @@ namespace Fragsurf.Movement
 {
     public class ApplyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
         public Image image;
-        public AudioSource effectsSource, musicSource;
+        public AudioSource effectsSource, musicSource, succesSound;
         private Text text;
-        private Color inColor;
-        private Color outColor;
+        private Color inColor, outColor;
         //Switches
         public Slider music, effects, sens, fov;
         public Dropdown res, quality;
@@ -21,6 +20,8 @@ namespace Fragsurf.Movement
         {
 
             effectsSource.volume = effects.value;
+            if (succesSound != null)
+                succesSound.Play();
 
         }
         public void SlidersChanged()
