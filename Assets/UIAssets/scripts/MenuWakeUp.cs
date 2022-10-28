@@ -15,5 +15,10 @@ public class MenuWakeUp : MonoBehaviour
             MainMenu.SetActive(false);
             Options.SetActive(true);
         }
+
+        
+        
     }
 }
+
+

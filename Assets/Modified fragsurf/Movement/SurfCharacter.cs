@@ -22,13 +22,16 @@ namespace Fragsurf.Movement {
 
         ///// Fields /////
         ///finishui
-        public GameObject FinishScreen, HUD, EscapeOverlay;
-        public Text TimeVar, MaxSpeed;
-        public AudioSource FinishSound, GameMusic;
+        [Header("UI variables")]
+
+        public GameObject FinishScreen;
+        public GameObject HUD, EscapeOverlay;
+        public Text TimeVar, MaxSpeed, Speed, Keys, Timer, BestTime, BestSpeed;
+
+        [Header("Audio")]
+        public AudioSource FinishSound;
+        public AudioSource GameMusic;
         //overlay during the game
-        public Text Speed;
-        public Text Keys;
-        public Text Timer;
 //<<<<<<< HEAD
         [Header("Physics Settings")] public Vector3 colliderSize = new Vector3(1f, 2f, 1f);
 
@@ -89,6 +92,7 @@ namespace Fragsurf.Movement {
         private bool underwater = false;
         bool TimerStarted = false;
         private float _timer = 0;
+        private float LastBestSpeed;
         ///// Properties /////
 
         public MoveType moveType
@@ -474,7 +478,13 @@ namespace Fragsurf.Movement {
                 TimeVar.text = FormatTime(_timer);
                 maximumSpeed = maximumSpeed * 10;
                 MaxSpeed.text = maximumSpeed.ToString("F2");
-
+                if(LastBestSpeed < maximumSpeed)
+                {
+                    //New Record Best Speed
+                    //set the new record
+                    LastBestSpeed = maximumSpeed;
+                    BestSpeed.text = LastBestSpeed.ToString("F2");
+                }
 
                 //disable onscreen variables
                 Speed.gameObject.SetActive(false);

@@ -22,6 +22,8 @@ namespace Fragsurf.Movement
             effectsSource.volume = effects.value;
             if (succesSound != null)
                 succesSound.Play();
+            // save options data
+            SaveSystem.SaveData(this);
 
         }
         public void SlidersChanged()
@@ -38,10 +40,6 @@ namespace Fragsurf.Movement
             _effects.text = Math.Round(effects.value*100,0).ToString();
             _fov.text = Math.Round(fov.value,0).ToString();
             _sens.text = Math.Round(sens.value,2).ToString();
-            //music.value = float.Parse(_music.text);
-            //effects.value = float.Parse(_effects.text);
-            //sens.value = float.Parse(_sens.text);
-            //fov.value = float.Parse(_fov.text);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -67,6 +65,14 @@ namespace Fragsurf.Movement
         // Start is called before the first frame update
         void Start()
         {
+            //set values on sliders from the manager
+            effects.value = MainManager.Instance.effectsVol;
+            music.value = MainManager.Instance.musicVol;
+            sens.value = MainManager.Instance.sensivity;
+            fov.value = MainManager.Instance.fov;
+
+
+
             text = gameObject.GetComponent<Text>();
             inColor = Color.black;
             outColor = Color.white;
@@ -88,6 +94,8 @@ namespace Fragsurf.Movement
             _effects.onEndEdit.AddListener(delegate { SlidersChanged(); });
             _fov.onEndEdit.AddListener(delegate { SlidersChanged(); });
             _sens.onEndEdit.AddListener(delegate { SlidersChanged(); });
+            //set everything
+            SlidersChanged();
         }
 
         private void QualityChanged()
