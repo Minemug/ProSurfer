@@ -15,7 +15,6 @@ namespace Fragsurf.Movement
         public Dropdown res, quality;
         public InputField _music, _effects, _sens, _fov;
         //gamesens
-
         public void OnPointerClick(PointerEventData eventData)
         {
 
@@ -23,23 +22,23 @@ namespace Fragsurf.Movement
             if (succesSound != null)
                 succesSound.Play();
             // save options data
-            SaveSystem.SaveData(this);
-
+            SaveSystem.SaveOptions(this);
+            
         }
         public void SlidersChanged()
         {
             effectsSource.volume = effects.value;
             musicSource.volume = music.value;
-            // set manager variables
+            //// set manager variables
             MainManager.Instance.effectsVol = effects.value;
             MainManager.Instance.musicVol = music.value;
             MainManager.Instance.sensivity = sens.value;
             MainManager.Instance.fov = fov.value;
 
-            _music.text = Math.Round(music.value*100,0).ToString();
-            _effects.text = Math.Round(effects.value*100,0).ToString();
-            _fov.text = Math.Round(fov.value,0).ToString();
-            _sens.text = Math.Round(sens.value,2).ToString();
+            _music.text = Math.Round(music.value * 100, 0).ToString();
+            _effects.text = Math.Round(effects.value * 100, 0).ToString();
+            _fov.text = Math.Round(fov.value, 0).ToString();
+            _sens.text = Math.Round(sens.value, 2).ToString();
         }
 
         public void OnPointerEnter(PointerEventData eventData)

@@ -170,10 +170,8 @@ namespace Fragsurf.Movement {
                                 //check if speed isnt negative then slow down
                                 //if(math > 0f)
                                 _surfer.moveData.velocity.y -= _config.fallingspeed * _deltaTime *100;
+                                _surfer.moveData.velocity -= _surfer.moveData.velocity  * _deltaTime;
 
-                                Debug.Log(_surfer.moveData.velocity + "vel");
-                                Debug.Log(_surfer.forward + "for");
-                                
                                 break;
                             }
                             

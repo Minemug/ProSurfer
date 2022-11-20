@@ -1,3 +1,4 @@
+using Fragsurf.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,8 @@ public class MainManager : MonoBehaviour
         }
 
         Instance = this;
-        PlayerData data = SaveSystem.LoadData();
+        PlayerOptions data = SaveSystem.LoadOptions();
+        
         sensivity = data.Sensivity;
         fov = data.Fov;
         musicVol = data.MusicVolume;
