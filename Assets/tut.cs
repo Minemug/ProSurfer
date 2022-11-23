@@ -27,25 +27,25 @@ public class tut : MonoBehaviour
         if (other.gameObject.tag == "Tut_jump" && isjumptriggered==false)
         {
             Nav.text = "Jump";
-            Bh.text = "Press space to jump";
+            Bh.text = "To jump press space bar";
             isjumptriggered = true;
         }
         if (other.gameObject.tag == "Tut_bh" && isbhtriggered==false)
         {
             Nav.text = "Bunnyhop";
-            Bh.text = "Sometimes single jump won't be enough. \nTo jump over the next gap you need to gain speed. " +
-                      "To do this just click W and hold SPACE. Then release W button and gain speed by looking around and pressing side movement buttons. " +
-                      "To increase your speed hold A or D and move mouse in the same direction.\nTry reaching 200 speed in order to jump over the gap.";
+            Bh.text = "Sometimes single jump won't be enough. \nTo jump over next gap you need to gain speed. " +
+                      "To do this just click W and hold SPACEBAR. After that release W button and gain speed by looking around and pressing side movement buttons. " +
+                      "To increase your speed you need to hold A or D and move mouse in the same direction.\nTry to reach 200 speed units and jump to next platform.";
             isbhtriggered = true;
         }
         if (other.gameObject.tag == "Tut_surf")
         {
             Nav.text = "Surf";
             Bh.text = "Nice, you did it! \n" +
-                      "Now all you need to do is surf to finish. To do that simply gain speed and jump over surf ramp. " +
-                      "Then hold opposite movement button to slide. \n" +
-                      "For example if you want to surf on right side of ramp you need to hold A.\n" +
-                      "Good luck!";
+                      "Now all you need to do is surf to finish. To do that just simple gain speed and jump over surf ramp. " +
+                      "Then you need to hold opposite movement button to side where you are. \n" +
+                      "For example if you want to go on right side of ramp you need to hold A to surf.\n" +
+                      "Good luck";
         }
             
 

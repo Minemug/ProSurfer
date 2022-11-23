@@ -25,6 +25,7 @@ public class GoBackButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             OptionsMenu.SetActive(false);
             MainMenu.SetActive(true);
+            image.gameObject.SetActive(false);
         }
         else
         {

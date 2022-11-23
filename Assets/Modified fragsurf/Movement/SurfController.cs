@@ -154,10 +154,11 @@ namespace Fragsurf.Movement {
                                 else
                                 {
                                     _surfer.moveData.velocity += _surfer.forward * angle * -1 * _config.RampDeccelaration * _deltaTime;
+                                    
                                 }
                                 break;
                             }
-                            else if(ADandRamp > 90)
+                            else if(ADandRamp >= 90)
                             {
                                 _surfer.moveData.velocity += AirInputMovement();
 
@@ -168,10 +169,14 @@ namespace Fragsurf.Movement {
                             else
                             {
                                 //check if speed isnt negative then slow down
-                                //if(math > 0f)
-                                _surfer.moveData.velocity.y -= _config.fallingspeed * _deltaTime *100;
-                                _surfer.moveData.velocity -= _surfer.moveData.velocity  * _deltaTime;
+                                if(math > 0f)
+                                    _surfer.moveData.velocity -= _surfer.moveData.velocity * 0.05f;
+                                _surfer.moveData.velocity.y =-  _config.fallingspeed;
+                                //_surfer.moveData.velocity.y -= _config.fallingspeed * _deltaTime *100;
 
+                                Debug.Log(_surfer.moveData.velocity + "vel");
+                                Debug.Log(_surfer.forward + "for");
+                                
                                 break;
                             }
                             

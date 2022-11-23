@@ -231,13 +231,11 @@ MonoBehaviour:
   EscapeOverlay: {fileID: 0}
   TimeVar: {fileID: 0}
   MaxSpeed: {fileID: 0}
+  FinishSound: {fileID: 0}
+  GameMusic: {fileID: 0}
   Speed: {fileID: 0}
   Keys: {fileID: 0}
   Timer: {fileID: 0}
-  BestTime: {fileID: 0}
-  BestSpeed: {fileID: 0}
-  FinishSound: {fileID: 0}
-  GameMusic: {fileID: 0}
   colliderSize: {x: 1, y: 2, z: 1}
   weight: 75
   rigidbodyPushForce: 2
@@ -253,7 +251,7 @@ MonoBehaviour:
   useStepOffset: 0
   stepOffset: 0.35
   movementConfig:
-    fallingspeed: 4
+    fallingspeed: 6
     yChangeFactor: 30
     RampAccelaration: 0.4
     RampDeccelaration: 0.3
@@ -276,8 +274,6 @@ MonoBehaviour:
     crouchAcceleration: 8
     crouchDeceleration: 4
     crouchFriction: 3
-  BestSpeeds: []
-  BestTimes: []
 --- !u!1 &5467285085316221438
 GameObject:
   m_ObjectHideFlags: 0

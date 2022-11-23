@@ -28,21 +28,8 @@ public class ChooseLVL : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 case "LVL3":
                     SceneManager.LoadScene("Level3");
                     break;
-                case "LVL4":
-                    SceneManager.LoadScene("Level4");
-                    break;
-                case "LVL5":
-                    SceneManager.LoadScene("Level5");
-                    break;
-                case "LVL6":
-                    SceneManager.LoadScene("Level6");
-                    break;
-            default:
-                break;
-
-
-
-        }
+                
+            }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
