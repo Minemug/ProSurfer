@@ -29,15 +29,9 @@ namespace Fragsurf.Movement
 
         public List<float> BestSpeed = new List<float>(4);
         public List<float> BestTime = new List<float>(4);
-        //public float[] NajSpeed;
         
         public PlayerScores(SurfCharacter Scores)
         {
-            BestSpeed.Add(0);
-            BestSpeed.Add(0);
-            BestSpeed.Add(0);
-            BestSpeed.Add(0);
-            BestSpeed.Add(0);
             for (int i = 0; i < 5; i++)
             {
                 BestSpeed.Insert(i, Scores.BestSpeeds[i]);

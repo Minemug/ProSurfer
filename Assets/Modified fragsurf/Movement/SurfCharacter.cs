@@ -185,16 +185,11 @@ namespace Fragsurf.Movement {
         private void Start()
         {
             CurrentScene = SceneManager.GetActiveScene().buildIndex;
-            BestSpeeds.Add(1);
-            BestSpeeds.Add(2);
-            BestSpeeds.Add(3);
-            BestSpeeds.Add(4);
-            BestSpeeds.Add(5);
-            BestTimes.Add(10000);
-            BestTimes.Add(10000);
-            BestTimes.Add(10000);
-            BestTimes.Add(10000);
-            BestTimes.Add(10000);
+            for (int i = 0; i < 10; i++)
+            {
+                BestSpeeds.Add(1); 
+                BestTimes.Add(10000);
+            }
 
             _colliderObject = new GameObject("PlayerCollider");
             _colliderObject.layer = gameObject.layer;

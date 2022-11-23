@@ -20,11 +20,13 @@ public class MainManager : MonoBehaviour
 
         Instance = this;
         PlayerOptions data = SaveSystem.LoadOptions();
-        
-        sensivity = data.Sensivity;
-        fov = data.Fov;
-        musicVol = data.MusicVolume;
-        effectsVol = data.Effectsvolume;
+        if (data != null)
+        {
+            sensivity = data.Sensivity;
+            fov = data.Fov;
+            musicVol = data.MusicVolume;
+            effectsVol = data.Effectsvolume;
+        }
         OptionsScene = false;
         DontDestroyOnLoad(gameObject);
     }
