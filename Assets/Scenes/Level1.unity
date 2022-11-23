@@ -564,6 +564,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742794031}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &749910365 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7628906509690380018, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+  m_PrefabInstance: {fileID: 4941331800131807275}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &783171828
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,9 +747,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1495664838}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: BestTime
+      value: 
+      objectReference: {fileID: 749910365}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: MaxSpeed
       value: 
       objectReference: {fileID: 1106748267}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: BestSpeed
+      value: 
+      objectReference: {fileID: 1579585508}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: GameMusic
       value: 
@@ -1407,6 +1426,17 @@ Transform:
   m_Father: {fileID: 453158385}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -41.134, y: 79.429, z: 18.535}
+--- !u!114 &1579585508 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3179399928509034796, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+  m_PrefabInstance: {fileID: 4941331800131807275}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1601996689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2233,6 +2263,10 @@ PrefabInstance:
     - target: {fileID: 5670866707587211342, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
       propertyPath: m_Name
       value: SpeedVar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432408289649384924, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
