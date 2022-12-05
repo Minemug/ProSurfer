@@ -18,6 +18,7 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Text text;
     private Color inColor = Color.black;
     private Color outColor = Color.white;
+    public GameObject BhopLvl;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -54,6 +55,14 @@ public class hover_script : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                     break;
                 case "EXIT":
                     Application.Quit();
+                    break;
+                case "Bhop LVL'S >>":
+                    ChooseLevel.SetActive(false);
+                    BhopLvl.SetActive(true);
+                    break;
+                case "<< Surf LVL'S":
+                    ChooseLevel.SetActive(true);
+                    BhopLvl.SetActive(false);
                     break;
             }
         }
