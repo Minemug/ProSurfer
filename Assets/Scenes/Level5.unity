@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04356823, g: 0.04413361, b: 0.059573006, a: 1}
+  m_IndirectSpecularColor: {r: 0.043568615, g: 0.044152383, b: 0.05956607, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1113,9 +1113,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1495664838}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: BestTime
+      value: 
+      objectReference: {fileID: 4941331800131807277}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: MaxSpeed
       value: 
       objectReference: {fileID: 1106748267}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: BestSpeed
+      value: 
+      objectReference: {fileID: 4941331800131807276}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: GameMusic
       value: 
@@ -4037,3 +4045,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+--- !u!114 &4941331800131807276 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3179399928509034796, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+  m_PrefabInstance: {fileID: 4941331800131807275}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4941331800131807277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7628906509690380018, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+  m_PrefabInstance: {fileID: 4941331800131807275}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

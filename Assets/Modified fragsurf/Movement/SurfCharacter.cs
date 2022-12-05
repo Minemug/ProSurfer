@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Fragsurf.Movement {
 
@@ -11,8 +12,10 @@ namespace Fragsurf.Movement {
     /// Easily add a surfable character to the scene
     /// </summary>
     [AddComponentMenu("Fragsurf/Surf Character")]
+    [Serializable]
     public class SurfCharacter : MonoBehaviour, ISurfControllable
     {
+        
 
         public enum ColliderType
         {
@@ -22,14 +25,17 @@ namespace Fragsurf.Movement {
 
         ///// Fields /////
         ///finishui
-        public GameObject FinishScreen, HUD, EscapeOverlay;
-        public Text TimeVar, MaxSpeed;
-        public AudioSource FinishSound, GameMusic;
+        [Header("UI variables")]
+
+        public GameObject FinishScreen;
+        public GameObject HUD, EscapeOverlay;
+        public Text TimeVar, MaxSpeed, Speed, Keys, Timer, BestTime, BestSpeed;
+
+        [Header("Audio")]
+        public AudioSource FinishSound;
+        public AudioSource GameMusic;
         //overlay during the game
-        public Text Speed;
-        public Text Keys;
-        public Text Timer;
-//<<<<<<< HEAD
+
         [Header("Physics Settings")] public Vector3 colliderSize = new Vector3(1f, 2f, 1f);
 
         [HideInInspector]
@@ -44,7 +50,8 @@ namespace Fragsurf.Movement {
         public float rigidbodyPushForce = 2f;
         public bool solidCollider = false;
 
-        [Header("View Settings")] public Transform viewTransform;
+        [Header("View Settings")] 
+        public Transform viewTransform;
         public Transform playerRotationTransform;
 
         [Header("Crouching setup")] public float crouchingHeightMultiplier = 0.5f;
@@ -55,7 +62,8 @@ namespace Fragsurf.Movement {
             allowCrouch =
                 true; // This is separate because you shouldn't be able to toggle crouching on and off during gameplay for various reasons
 
-        [Header("Features")] public bool crouchingEnabled = true;
+        [Header("Features")] 
+        public bool crouchingEnabled = true;
         public bool slidingEnabled = false;
         public bool laddersEnabled = true;
         public bool supportAngledLadders = true;
@@ -65,7 +73,7 @@ namespace Fragsurf.Movement {
 
         public float stepOffset = 0.35f;
 
-        [Header("Movement Config")] [SerializeField]
+        [Header("Movement Config")]       
         public MovementConfig movementConfig;
 
         
@@ -77,20 +85,29 @@ namespace Fragsurf.Movement {
         private GameObject _colliderObject;
         private GameObject _cameraWaterCheckObject;
         private CameraWaterCheck _cameraWaterCheck;
-        
         private MoveData _moveData = new MoveData();
         private SurfController _controller = new SurfController();
+        
 
         private Rigidbody rb;
 
         private List<Collider> triggers = new List<Collider>();
+
         private int numberOfTriggers = 0;
         private float speed_text;
         private bool underwater = false;
         bool TimerStarted = false;
         private float _timer = 0;
+        //variables for serialization
+        private int CurrentScene;
+        public List<float> BestSpeeds = new List<float>(4);
+        public List<float> BestTimes = new List<float>(4);
+
         ///// Properties /////
 
+
+
+        
         public MoveType moveType
         {
             get { return MoveType.Walk; }
@@ -167,6 +184,22 @@ namespace Fragsurf.Movement {
 
         private void Start()
         {
+            CurrentScene = SceneManager.GetActiveScene().buildIndex;
+            for (int i = 0; i < 10; i++)
+            {
+                BestSpeeds.Add(1); 
+                BestTimes.Add(10000);
+            }
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
 
             _colliderObject = new GameObject("PlayerCollider");
             _colliderObject.layer = gameObject.layer;
@@ -463,25 +496,66 @@ namespace Fragsurf.Movement {
             {
                 if (TimerStarted) TimerStarted = false;
 
-                Debug.Log(_timer);
-                StopTheGame();
                 //actually stop the time
+                StopTheGame();
                 HUD.SetActive(false);
                 GameMusic.Stop();
                 FinishSound.Play();
                 //show to finish overlay
                 FinishScreen.SetActive(true);
+                //scores
                 TimeVar.text = FormatTime(_timer);
                 maximumSpeed = maximumSpeed * 10;
                 MaxSpeed.text = maximumSpeed.ToString("F2");
-
+                //load high scores
+                PlayerScores BestScores = SaveSystem.LoadScores();
+                //set records and display them on canvas
+                SetNewRecords(BestScores);
+                // Save if the player won the LVL
 
                 //disable onscreen variables
                 Speed.gameObject.SetActive(false);
                 Keys.gameObject.SetActive(false);
             }
-            
+        }
 
+        private void SetNewRecords(PlayerScores BestScores)
+        {
+            if (BestScores != null)
+            {
+                if (BestScores.BestSpeed[CurrentScene] < maximumSpeed)
+                {
+                    //New Record Best Speed
+                    BestSpeeds.Insert(CurrentScene, maximumSpeed);
+
+                    //save best speeds
+                    SaveSystem.SaveScores(this);
+                    BestSpeed.text = maximumSpeed.ToString("F2");
+                }
+                else BestSpeed.text = BestScores.BestSpeed[CurrentScene].ToString("F2");
+                // Time records
+                if (BestScores.BestTime[CurrentScene] > _timer)
+                {
+                    //Set a new record
+                    BestTimes[CurrentScene] = _timer;
+                    SaveSystem.SaveScores(this);
+                    BestTime.text = FormatTime(_timer);
+                }
+                else
+                {
+                    BestTime.text = FormatTime(BestScores.BestTime[CurrentScene]);
+                }
+            }
+            else
+            {
+                // There is no data saved about highes scores so I will save the current one
+                BestSpeeds.Insert(CurrentScene, maximumSpeed);
+                BestTimes.Insert(CurrentScene, _timer);
+                SaveSystem.SaveScores(this);
+                // Set highscore on overlay
+                BestSpeed.text = maximumSpeed.ToString("F2");
+                BestTime.text = FormatTime(_timer);
+            }
         }
 
         private static void StopTheGame()
