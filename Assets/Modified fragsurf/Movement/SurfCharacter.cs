@@ -190,6 +190,16 @@ namespace Fragsurf.Movement {
                 BestSpeeds.Add(1); 
                 BestTimes.Add(10000);
             }
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
+            BestSpeeds.Add(1);
+            BestTimes.Add(10000);
 
             _colliderObject = new GameObject("PlayerCollider");
             _colliderObject.layer = gameObject.layer;
@@ -501,7 +511,7 @@ namespace Fragsurf.Movement {
                 PlayerScores BestScores = SaveSystem.LoadScores();
                 //set records and display them on canvas
                 SetNewRecords(BestScores);
-
+                // Save if the player won the LVL
 
                 //disable onscreen variables
                 Speed.gameObject.SetActive(false);
@@ -539,14 +549,12 @@ namespace Fragsurf.Movement {
             else
             {
                 // There is no data saved about highes scores so I will save the current one
-                //NajlepszeSpeedy[CurrentScene] = maximumSpeed;
                 BestSpeeds.Insert(CurrentScene, maximumSpeed);
                 BestTimes.Insert(CurrentScene, _timer);
                 SaveSystem.SaveScores(this);
                 // Set highscore on overlay
                 BestSpeed.text = maximumSpeed.ToString("F2");
                 BestTime.text = FormatTime(_timer);
-
             }
         }
 

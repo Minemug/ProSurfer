@@ -41,7 +41,7 @@ public static class SaveSystem
 
         }else
         {
-            Debug.LogError("You dont have any saved data");
+            Debug.LogError("You dont have any saved data for Options");
             return null;
         }
 
@@ -60,7 +60,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("You dont have any saved data");
+            Debug.LogError("You dont have any saved data as High Scores");
             return null;
         }
 

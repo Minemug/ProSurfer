@@ -27,6 +27,13 @@ public class MainManager : MonoBehaviour
             musicVol = data.MusicVolume;
             effectsVol = data.Effectsvolume;
         }
+        else
+        {
+            sensivity = 1;
+            fov = 90;
+            musicVol = 40;
+            effectsVol = 40;
+        }
         OptionsScene = false;
         DontDestroyOnLoad(gameObject);
     }

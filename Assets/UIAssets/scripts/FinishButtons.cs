@@ -38,6 +38,16 @@ public class FinishButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                     case "Level2":
                         SceneManager.LoadScene("Level3");
                         break;
+                    case "Level3":
+                        SceneManager.LoadScene("Level4");
+                        break;
+                    case "Level4":
+                        SceneManager.LoadScene("Level5");
+                        break;
+                    case "Level5":
+                        SceneManager.LoadScene("Level6");
+                        break;
+
                     default:
                         break;
                 }
