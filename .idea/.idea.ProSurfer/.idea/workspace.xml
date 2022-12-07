@@ -8,6 +8,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ec3403bd7b934600953cb31df83ec2a539400/ae/da21ee55/IPointerEnterHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Modified fragsurf/Movement/SurfCharacter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/tut.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/GraphicRaycaster.cs" root0="SKIP_HIGHLIGHTING" />
@@ -99,6 +100,9 @@
       <workItem from="1669758559196" duration="3000" />
       <workItem from="1670023220496" duration="859000" />
       <workItem from="1670027338715" duration="539000" />
+      <workItem from="1670274682317" duration="564000" />
+      <workItem from="1670280510233" duration="4887000" />
+      <workItem from="1670285747928" duration="1697000" />
     </task>
     <servers />
   </component>

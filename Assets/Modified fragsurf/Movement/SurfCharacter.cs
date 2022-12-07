@@ -308,7 +308,7 @@ namespace Fragsurf.Movement {
         private void Update()
         {
             //Respawn
-            if (transform.position.y < -300 || Input.GetKeyDown(KeyCode.R))
+            if (transform.position.y < -300 || Input.GetKeyDown(KeyCode.R) && FinishScreen.activeSelf == false)
                 ResetPosition();
             // Speed indicator
             speed_text = _moveData.velocity.magnitude * 10;
@@ -321,7 +321,7 @@ namespace Fragsurf.Movement {
             //UpdateTestBinds ();
 
             // ESCAPE 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && FinishScreen.activeSelf == false)
             {
                 if (EscapeOverlay.activeInHierarchy)
                 {
@@ -516,6 +516,7 @@ namespace Fragsurf.Movement {
                 //disable onscreen variables
                 Speed.gameObject.SetActive(false);
                 Keys.gameObject.SetActive(false);
+                
             }
         }
 

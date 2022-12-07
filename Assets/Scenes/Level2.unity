@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.28795666, g: 0.21213138, b: 0.30179372, a: 1}
+  m_IndirectSpecularColor: {r: 0.28797492, g: 0.21212919, b: 0.30183244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1405,6 +1405,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &765868150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 585424481265254410, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+  m_PrefabInstance: {fileID: 765868146}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &765868151 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 160183905624562274, guid: 640a30a4390eea64aae687da0fd6e182, type: 3}
+  m_PrefabInstance: {fileID: 765868146}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &783171828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,9 +1683,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 765868148}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: BestTime
+      value: 
+      objectReference: {fileID: 765868151}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: MaxSpeed
       value: 
       objectReference: {fileID: 765868149}
+    - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: BestSpeed
+      value: 
+      objectReference: {fileID: 765868150}
     - target: {fileID: 5467285084242854815, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: GameMusic
       value: 

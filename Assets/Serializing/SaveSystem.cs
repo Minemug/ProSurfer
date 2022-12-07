@@ -30,7 +30,7 @@ public static class SaveSystem
 
     public static PlayerOptions LoadOptions()
     {
-        string path = Application.persistentDataPath + "/PlayerOptions";
+        string path = Application.persistentDataPath + "/playerOptions";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -38,9 +38,11 @@ public static class SaveSystem
             PlayerOptions data = formatter.Deserialize(stream) as PlayerOptions;
             stream.Close();
             return data;
+            
 
         }else
         {
+            
             Debug.LogError("You dont have any saved data for Options");
             return null;
         }
