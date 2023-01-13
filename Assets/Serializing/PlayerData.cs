@@ -50,6 +50,20 @@ namespace Fragsurf.Movement
 
     }
 
-
+    [System.Serializable]
+    public class PlayerWonLevels
+    {
+        private int numberOfScenes = SceneManager.sceneCountInBuildSettings; 
+        public List<bool> wonLevels = new List<bool>(5);
+        
+        public PlayerWonLevels(SurfCharacter WonLevels)
+        {
+            for (int i = 0; i < numberOfScenes; i++)
+            {
+                wonLevels.Insert(i, WonLevels.WonLevels[i]);
+                Debug.Log(wonLevels[i] +" " +i);
+            }
+        }
+    }
 
 }

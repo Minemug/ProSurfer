@@ -100,9 +100,11 @@ namespace Fragsurf.Movement {
         private float _timer = 0;
         //variables for serialization
         private int CurrentScene;
+        private int numberOfScenes;
         public List<float> BestSpeeds = new List<float>(4);
         public List<float> BestTimes = new List<float>(4);
-
+        public List<bool> WonLevels = new List<bool>(4);
+        //yes
         ///// Properties /////
 
 
@@ -169,7 +171,6 @@ namespace Fragsurf.Movement {
 
         private void Awake()
         {
-
             _controller.playerTransform = playerRotationTransform;
 
             if (viewTransform != null)
@@ -179,27 +180,28 @@ namespace Fragsurf.Movement {
                 _controller.cameraYPos = viewTransform.localPosition.y;
 
             }
-
         }
 
         private void Start()
         {
             CurrentScene = SceneManager.GetActiveScene().buildIndex;
+            numberOfScenes = SceneManager.sceneCountInBuildSettings;
             for (int i = 0; i < 10; i++)
             {
                 BestSpeeds.Add(1); 
                 BestTimes.Add(10000);
+                WonLevels.Add(true);
             }
-            BestSpeeds.Add(1);
-            BestTimes.Add(10000);
-            BestSpeeds.Add(1);
-            BestTimes.Add(10000);
-            BestSpeeds.Add(1);
-            BestTimes.Add(10000);
-            BestSpeeds.Add(1);
-            BestTimes.Add(10000);
-            BestSpeeds.Add(1);
-            BestTimes.Add(10000);
+            PlayerWonLevels data = SaveSystem.LoadWonLevels();
+            if (data != null)
+            {
+                for (int i = 0; i < numberOfScenes; i++)
+                {
+                    WonLevels[i] = data.wonLevels[i];
+                }
+            }
+            
+            
 
             _colliderObject = new GameObject("PlayerCollider");
             _colliderObject.layer = gameObject.layer;
@@ -207,7 +209,7 @@ namespace Fragsurf.Movement {
             _colliderObject.transform.rotation = Quaternion.identity;
             _colliderObject.transform.localPosition = Vector3.zero;
             _colliderObject.transform.SetSiblingIndex(0);
-
+            
             // Water check
             _cameraWaterCheckObject = new GameObject("Camera water check");
             _cameraWaterCheckObject.layer = gameObject.layer;
@@ -508,10 +510,12 @@ namespace Fragsurf.Movement {
                 maximumSpeed = maximumSpeed * 10;
                 MaxSpeed.text = maximumSpeed.ToString("F2");
                 //load high scores
-                PlayerScores BestScores = SaveSystem.LoadScores();
                 //set records and display them on canvas
+                PlayerScores BestScores = SaveSystem.LoadScores();
                 SetNewRecords(BestScores);
                 // Save if the player won the LVL
+                WonLevels[CurrentScene] = false;
+                SaveSystem.SaveLevels(this);
 
                 //disable onscreen variables
                 Speed.gameObject.SetActive(false);

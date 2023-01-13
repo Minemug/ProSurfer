@@ -27,6 +27,16 @@ public static class SaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
     }
+    public static void SaveLevels(SurfCharacter WonLevels)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/playerLevels";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        PlayerWonLevels data = new PlayerWonLevels(WonLevels);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
 
     public static PlayerOptions LoadOptions()
     {
@@ -58,14 +68,29 @@ public static class SaveSystem
             PlayerScores data = formatter.Deserialize(stream) as PlayerScores;
             stream.Close();
             return data;
-
         }
         else
         {
             Debug.LogError("You dont have any saved data as High Scores");
             return null;
         }
-
+    }
+    public static PlayerWonLevels LoadWonLevels()
+    {
+        string path = Application.persistentDataPath + "/playerLevels";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+            PlayerWonLevels data = formatter.Deserialize(stream) as PlayerWonLevels;
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            Debug.LogError("You dont have any saved data as won levels");
+            return null;
+        }
     }
 
 
