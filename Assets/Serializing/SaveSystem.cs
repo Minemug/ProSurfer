@@ -16,6 +16,7 @@ public static class SaveSystem
 
         formatter.Serialize(stream, data);
         stream.Close();
+        Debug.Log("You saved the options");
     }
     public static void SaveScores(SurfCharacter Scores)
     {

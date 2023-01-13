@@ -18,7 +18,7 @@ namespace Fragsurf.Movement
 
         public void OnPointerClick(PointerEventData eventData)
         {
-
+            SaveSystem.SaveOptions(this);
             effectsSource.volume = effects.value;
             if (succesSound != null)
                 succesSound.Play();
@@ -29,10 +29,7 @@ namespace Fragsurf.Movement
             effectsSource.volume = effects.value;
             musicSource.volume = music.value;
             // set manager variables
-            MainManager.Instance.effectsVol = effects.value;
-            MainManager.Instance.musicVol = music.value;
-            MainManager.Instance.sensivity = sens.value;
-            MainManager.Instance.fov = fov.value;
+            
 
             _music.text = Math.Round(music.value*100,0).ToString();
             _effects.text = Math.Round(effects.value*100,0).ToString();
@@ -67,6 +64,10 @@ namespace Fragsurf.Movement
         // Start is called before the first frame update
         void Start()
         {
+            effects.value = MainManager.Instance.effectsVol;
+            music.value = MainManager.Instance.musicVol;
+            sens.value = MainManager.Instance.sensivity;
+            fov.value = MainManager.Instance.fov;
             text = gameObject.GetComponent<Text>();
             inColor = Color.black;
             outColor = Color.white;
