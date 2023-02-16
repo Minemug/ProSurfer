@@ -18,6 +18,37 @@ public static class SaveSystem
         stream.Close();
         Debug.Log("You saved the options");
     }
+    public static void SaveReplay (PlayerAiming replay)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.streamingAssetsPath + "/playerReplay";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        PlayerReplay data = new PlayerReplay(replay);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+        Debug.Log("You saved the replay");
+    }
+    public static PlayerReplay LoadReplay()
+    {
+        string path = Application.streamingAssetsPath + "/playerReplay";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+            PlayerReplay data = formatter.Deserialize(stream) as PlayerReplay;
+            stream.Close();
+            return data;
+            
+
+        }else
+        {
+            
+            Debug.LogError("You dont have any replays");
+            return null;
+        }
+
+    }
     public static void SaveScores(SurfCharacter Scores)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -93,7 +124,7 @@ public static class SaveSystem
             return null;
         }
     }
-
+    
 
 
 

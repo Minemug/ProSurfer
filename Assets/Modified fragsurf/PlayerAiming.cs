@@ -1,5 +1,9 @@
-﻿using UnityEngine;
-
+﻿using System;
+using UnityEngine;
+using UnityEngine.Rendering;
+using System.Collections.Generic;
+using Fragsurf.Movement;
+using UnityEngine.SceneManagement;
 public class PlayerAiming : MonoBehaviour
 {
 	[Header("References")]
@@ -29,7 +33,9 @@ public class PlayerAiming : MonoBehaviour
 
 	[HideInInspector]
 	public Vector2 punchAngleVel;
-
+	public GameObject player;
+	public List<PointInTime> pointsInTime;
+	public bool isPlaying = false;
 	private void Start()
 	{
 		// Lock the mouse
@@ -44,6 +50,13 @@ public class PlayerAiming : MonoBehaviour
 			sensitivityMultiplier = MainManager.Instance.sensivity;
 			Debug.Log("sens ustawiony na " + MainManager.Instance.sensivity);
         }
+		pointsInTime = new List<PointInTime>();
+		
+	}
+
+	private void Awake()
+	{
+		
 	}
 
 	private void Update()
@@ -54,23 +67,44 @@ public class PlayerAiming : MonoBehaviour
 
 		DecayPunchAngle();
 
-		// Input
-		float xMovement = Input.GetAxisRaw("Mouse X") * horizontalSensitivity * sensitivityMultiplier;
-		float yMovement = -Input.GetAxisRaw("Mouse Y") * verticalSensitivity * sensitivityMultiplier;
+		CalculateRotation();
 
-		// Calculate real rotation from input
-		realRotation = new Vector3(Mathf.Clamp(realRotation.x + yMovement, minYRotation, maxYRotation), realRotation.y + xMovement, realRotation.z);
-		realRotation.z = Mathf.Lerp(realRotation.z, 0f, Time.deltaTime * 3f);
+		if (Input.GetKeyDown(KeyCode.H) && SceneManager.GetActiveScene().buildIndex == 1)
+		{
+			//SaveSystem.SaveReplay(this);
+			PlayerReplay replay = SaveSystem.LoadReplay();
+			if (replay != null)
+			{
+				pointsInTime = replay.pointsInTime;
+			}
+			StartPlaying();
+		}
 
-		//Apply real rotation to body
-		bodyTransform.eulerAngles = Vector3.Scale(realRotation, new Vector3(0f, 1f, 0f));
+		if (Input.GetKeyUp(KeyCode.H) && SceneManager.GetActiveScene().buildIndex == 1)
+			StopPlaying();
+	}
+	private void CalculateRotation()
+	{
+		if (!isPlaying)
+		{
+			// Input
+			float xMovement = Input.GetAxisRaw("Mouse X") * horizontalSensitivity * sensitivityMultiplier;
+			float yMovement = -Input.GetAxisRaw("Mouse Y") * verticalSensitivity * sensitivityMultiplier;
 
-		//Apply rotation and recoil
-		Vector3 cameraEulerPunchApplied = realRotation;
-		cameraEulerPunchApplied.x += punchAngle.x;
-		cameraEulerPunchApplied.y += punchAngle.y;
+			// Calculate real rotation from input
+			realRotation = new Vector3(Mathf.Clamp(realRotation.x + yMovement, minYRotation, maxYRotation),
+				realRotation.y + xMovement, realRotation.z);
+			realRotation.z = Mathf.Lerp(realRotation.z, 0f, Time.deltaTime * 3f);
+			//Apply real rotation to body
+			bodyTransform.eulerAngles = Vector3.Scale(realRotation, new Vector3(0f, 1f, 0f));
 
-		transform.eulerAngles = cameraEulerPunchApplied;
+			//Apply rotation and recoil
+			Vector3 cameraEulerPunchApplied = realRotation;
+			cameraEulerPunchApplied.x += punchAngle.x;
+			cameraEulerPunchApplied.y += punchAngle.y;
+
+			transform.eulerAngles = cameraEulerPunchApplied;
+		}
 	}
 
 	public void ViewPunch(Vector2 punchAmount)
@@ -102,6 +136,50 @@ public class PlayerAiming : MonoBehaviour
 			punchAngle = Vector2.zero;
 			punchAngleVel = Vector2.zero;
 		}
+	}
+	private void StopPlaying()
+	{
+		isPlaying = true;
+	}
+
+	private void StartPlaying()
+	{
+		isPlaying = false;
+
+	}
+
+	private void FixedUpdate()
+	{
+
+		if (isPlaying)
+		{
+			Play();
+		}
+		else
+			Record();
+        
+        
+	}
+
+	private void Play()
+	{
+		
+		if (pointsInTime.Count > 0)
+		{
+			PointInTime pointInTime = pointsInTime[0];
+			player.transform.position = pointInTime.position;
+			bodyTransform.transform.eulerAngles = pointInTime.rotation;
+			pointsInTime.RemoveAt(0);
+		}
+		else
+		{
+			isPlaying = false;
+		}
+	}
+
+	void Record()
+	{
+		pointsInTime.Add(new PointInTime(player.transform.position, bodyTransform.transform.eulerAngles));
 	}
 }
 

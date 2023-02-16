@@ -25,7 +25,16 @@ namespace Fragsurf.Movement
             Sensivity = _applyButton.sens.value;
         }
     }
+    [System.Serializable]
+    public class PlayerReplay
+    {
+        public List<PointInTime> pointsInTime;
 
+        public PlayerReplay(PlayerAiming _playerAiming)
+        {
+            pointsInTime = _playerAiming.pointsInTime;
+        }
+    }
     [System.Serializable]
     public class PlayerScores { 
 
@@ -65,5 +74,7 @@ namespace Fragsurf.Movement
             }
         }
     }
+
+    
 
 }

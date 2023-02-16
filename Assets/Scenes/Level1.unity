@@ -783,6 +783,10 @@ PrefabInstance:
       propertyPath: movementConfig.surfingMultiplayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5467285085316221432, guid: a840589249729984398df665ca6e2508, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 842974413}
     - target: {fileID: 6169734394688834513, guid: a840589249729984398df665ca6e2508, type: 3}
       propertyPath: m_Controller
       value: 
@@ -841,6 +845,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a840589249729984398df665ca6e2508, type: 3}
+--- !u!1 &842974413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5467285084242854813, guid: a840589249729984398df665ca6e2508, type: 3}
+  m_PrefabInstance: {fileID: 842974412}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &903903047
 GameObject:
   m_ObjectHideFlags: 0
