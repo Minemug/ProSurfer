@@ -92,18 +92,7 @@ namespace Fragsurf.Movement
 
         private void QualityChanged()
         {
-            switch (quality.value)
-            {
-                case 0:
-                    QualitySettings.SetQualityLevel(0, true);
-                    break;
-                case 1:
-                    QualitySettings.SetQualityLevel(3, true);
-                    break;
-                case 2:
-                    QualitySettings.SetQualityLevel(9, true);
-                    break;
-            }
+            QualitySettings.SetQualityLevel(quality.value, true);
         }
 
         private void ResolutionChanged()

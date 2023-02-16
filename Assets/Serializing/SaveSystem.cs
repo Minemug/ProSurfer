@@ -13,7 +13,6 @@ public static class SaveSystem
         string path = Application.persistentDataPath + "/playerOptions";
         FileStream stream = new FileStream(path, FileMode.Create);
         PlayerOptions data = new PlayerOptions(Options);
-
         formatter.Serialize(stream, data);
         stream.Close();
     }
@@ -48,15 +47,11 @@ public static class SaveSystem
             PlayerOptions data = formatter.Deserialize(stream) as PlayerOptions;
             stream.Close();
             return data;
-            
-
         }else
         {
-            
             Debug.LogError("You dont have any saved data for Options");
             return null;
         }
-
     }
     public static PlayerScores LoadScores()
     {
