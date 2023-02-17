@@ -23,9 +23,19 @@ public class GoBackButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
         if (OptionsMenu.activeSelf)
         {
-            OptionsMenu.SetActive(false);
-            MainMenu.SetActive(true);
-            image.gameObject.SetActive(false);
+            if(MainManager.Instance.OptionsScene == true)
+            {
+                SceneManager.MergeScenes(SceneManager.GetActiveScene(), SceneManager.GetSceneByBuildIndex(1));
+                Debug.Log("jestem tu");
+            }
+            else
+            {
+                
+                Debug.Log(MainManager.Instance.OptionsScene);
+                OptionsMenu.SetActive(false);
+                MainMenu.SetActive(true);
+                image.gameObject.SetActive(false);
+            }
         }
         else
         {

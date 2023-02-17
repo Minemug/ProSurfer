@@ -53,10 +53,10 @@ public class FinishButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 }
                 break;
             case "Options":
-                if(MainManager.Instance != null)
                     MainManager.Instance.OptionsScene = true;
-                SceneManager.LoadScene("Menu");
-                Debug.Log("Options");
+                    Debug.Log(MainManager.Instance.OptionsScene);
+                    SceneManager.LoadScene("Menu",LoadSceneMode.Additive);
+                    Debug.Log("Options");
                 break;
             case "Quit":
                 Application.Quit();

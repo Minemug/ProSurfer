@@ -612,6 +612,7 @@ namespace Fragsurf.Movement {
 
         void OnCollisionEnter(Collision col)
         {
+            
             if (col.gameObject.tag == "Finish")
             {
                 Debug.Log("You Win!");

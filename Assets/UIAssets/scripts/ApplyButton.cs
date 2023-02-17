@@ -14,11 +14,19 @@ namespace Fragsurf.Movement
         public Slider music, effects, sens, fov;
         public Dropdown res, quality;
         public InputField _music, _effects, _sens, _fov;
-        //gamesens
-
+        public void Awake()
+        {
+            music.value = MainManager.Instance.musicVol;
+            effects.value = MainManager.Instance.effectsVol;
+            res.value = MainManager.Instance.res;
+            sens.value = MainManager.Instance.sensivity;
+            fov.value = MainManager.Instance.fov;
+            quality.value = MainManager.Instance.quality;
+            UpdateIndicators();
+        }
         public void OnPointerClick(PointerEventData eventData)
         {
-
+            SaveSystem.SaveOptions(this);
             effectsSource.volume = effects.value;
             if (succesSound != null)
                 succesSound.Play();
@@ -28,20 +36,15 @@ namespace Fragsurf.Movement
         {
             effectsSource.volume = effects.value;
             musicSource.volume = music.value;
-            // set manager variables
-            MainManager.Instance.effectsVol = effects.value;
-            MainManager.Instance.musicVol = music.value;
-            MainManager.Instance.sensivity = sens.value;
-            MainManager.Instance.fov = fov.value;
+            UpdateIndicators();
+        }
 
-            _music.text = Math.Round(music.value*100,0).ToString();
-            _effects.text = Math.Round(effects.value*100,0).ToString();
-            _fov.text = Math.Round(fov.value,0).ToString();
-            _sens.text = Math.Round(sens.value,2).ToString();
-            //music.value = float.Parse(_music.text);
-            //effects.value = float.Parse(_effects.text);
-            //sens.value = float.Parse(_sens.text);
-            //fov.value = float.Parse(_fov.text);
+        private void UpdateIndicators()
+        {
+            _music.text = Math.Round(music.value * 100, 0).ToString();
+            _effects.text = Math.Round(effects.value * 100, 0).ToString();
+            _fov.text = Math.Round(fov.value, 0).ToString();
+            _sens.text = Math.Round(sens.value, 2).ToString();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -88,11 +91,14 @@ namespace Fragsurf.Movement
             _effects.onEndEdit.AddListener(delegate { SlidersChanged(); });
             _fov.onEndEdit.AddListener(delegate { SlidersChanged(); });
             _sens.onEndEdit.AddListener(delegate { SlidersChanged(); });
+            
+            
         }
 
         private void QualityChanged()
         {
             QualitySettings.SetQualityLevel(quality.value, true);
+            
         }
 
         private void ResolutionChanged()
