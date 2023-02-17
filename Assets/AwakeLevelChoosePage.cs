@@ -14,7 +14,7 @@ public class AwakeLevelChoosePage : MonoBehaviour
         {
             for (int i = 0; i < locks.Length; i++)
             {
-                locks[i].SetActive(data.wonLevels[i]);
+                locks[i].SetActive(data.wonLevels[i+1]);
             }
         }
     }
