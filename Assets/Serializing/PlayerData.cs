@@ -10,11 +10,8 @@ namespace Fragsurf.Movement
     public class PlayerOptions
     {
         //alldata values
-        public float MusicVolume;
-        public float Effectsvolume;
-        public float Fov;
-        public int Resolution;
-        public float Sensivity;
+        public float MusicVolume, Sensivity, Effectsvolume, Fov;
+        public int Resolution, Quality;
 
         public PlayerOptions(ApplyButton _applyButton)
         {
@@ -23,6 +20,7 @@ namespace Fragsurf.Movement
             Fov = _applyButton.fov.value;
             Resolution = _applyButton.res.value;
             Sensivity = _applyButton.sens.value;
+            Quality = _applyButton.quality.value;
         }
     }
     [System.Serializable]
