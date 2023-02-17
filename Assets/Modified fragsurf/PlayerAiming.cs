@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 using System.Collections.Generic;
 using Fragsurf.Movement;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class PlayerAiming : MonoBehaviour
 {
 	[Header("References")]
@@ -80,7 +81,7 @@ public class PlayerAiming : MonoBehaviour
 			StartPlaying();
 		}
 
-		if (Input.GetKeyUp(KeyCode.H) && SceneManager.GetActiveScene().buildIndex == 1)
+		if (Input.GetKeyUp(KeyCode.Space) && SceneManager.GetActiveScene().buildIndex == 1)
 			StopPlaying();
 	}
 	private void CalculateRotation()
@@ -114,6 +115,7 @@ public class PlayerAiming : MonoBehaviour
 
 		//Recoil go up
 		punchAngleVel -= punchAmount * 20;
+		
 	}
 
 	private void DecayPunchAngle()
@@ -139,12 +141,12 @@ public class PlayerAiming : MonoBehaviour
 	}
 	private void StopPlaying()
 	{
-		isPlaying = true;
+		isPlaying = false;
 	}
 
 	private void StartPlaying()
 	{
-		isPlaying = false;
+		isPlaying = true;
 
 	}
 
@@ -170,6 +172,7 @@ public class PlayerAiming : MonoBehaviour
 			player.transform.position = pointInTime.position;
 			bodyTransform.transform.eulerAngles = pointInTime.rotation;
 			pointsInTime.RemoveAt(0);
+			
 		}
 		else
 		{

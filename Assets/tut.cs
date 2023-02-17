@@ -68,13 +68,14 @@ public class tut : MonoBehaviour
             Reset.text = "To restart level press R";
         }
 
-        if (Time.fixedTime >5 && help)
+        if (Time.fixedTime >300 && help )
         {
-            Reset.text = "To see how you should beat this level, press H";
+            Reset.text = "To see how you should beat this level, press H. To skip it, use space.";
             help = false;
         }
+        
 
-        if (Input.GetKeyDown(KeyCode.R) || player.transform.position.y < -300 || Input.GetKeyDown(KeyCode.H))
+            if (Input.GetKeyDown(KeyCode.R) || player.transform.position.y < -300 || Input.GetKeyDown(KeyCode.H))
         {
             Reset.text = " ";
         }
@@ -98,7 +99,6 @@ public class tut : MonoBehaviour
             d.color= new Color32(0,255,0,255);
         if(Input.GetKeyUp(KeyCode.D))
             d.color= new Color32(0,0,0,29);
-        
     }
 
 

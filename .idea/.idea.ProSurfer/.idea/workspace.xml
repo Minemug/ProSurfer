@@ -10,6 +10,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3be1a7ff939c43f181c0a10b5a0189ac13c800/cb/3a23e1f4/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3be1a7ff939c43f181c0a10b5a0189ac13c800/ea/f25c20ab/SceneManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/93a8f82184b4439ca5abff025375fe32564da0/c5/25a50f8a/Enum.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ec3403bd7b934600953cb31df83ec2a539400/ae/da21ee55/IPointerEnterHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Modified fragsurf/Movement/SurfCharacter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PointInTime.cs" root0="FORCE_HIGHLIGHTING" />
@@ -116,6 +117,8 @@
       <workItem from="1676501527172" duration="10377000" />
       <workItem from="1676512204102" duration="561000" />
       <workItem from="1676513435699" duration="928000" />
+      <workItem from="1676578415245" duration="10074000" />
+      <workItem from="1676591541913" duration="269000" />
     </task>
     <servers />
   </component>
